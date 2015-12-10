@@ -45,7 +45,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 			username = obtainUsername(request);			
 			password = obtainPassword(request);
 
-			//TODO: implement errors interface
 			UsernamePasswordValidationErrors errors = new UsernamePasswordValidationErrors("user");
 
 			if (username == null || username == "")
