@@ -16,10 +16,8 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.hateoas.mvc.ControllerLinkBuilderFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import de.fhbingen.epro.web.validation.UserValidator;
 
@@ -66,15 +64,6 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
-	}
-
-	@Bean
-	public ViewResolver configureViewResolver() {
-		InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
-		viewResolve.setPrefix("/WEB-INF/jsp/views/");
-		viewResolve.setSuffix(".jsp");
-
-		return viewResolve;
 	}
 	
     @Override

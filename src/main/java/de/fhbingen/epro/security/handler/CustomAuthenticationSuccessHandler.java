@@ -1,6 +1,8 @@
 package de.fhbingen.epro.security.handler;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,23 +13,38 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
+import de.fhbingen.epro.security.responses.AuthenticationSuccessResponse;
 import de.fhbingen.epro.security.token.TokenUtil;
 import de.fhbingen.epro.sql.User;
 
 @Service
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
+	
+	@Autowired
+	private Gson gson;
+	
 	@Autowired
 	private TokenUtil tokenUtil;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
-		
-		//TODO: send redirect with token
-		tokenUtil.addHeader(response, ((User) auth.getPrincipal()).getEmail());
-		//response.addHeader("location", "");
-		response.sendRedirect("");
+		String token;
+		try {
+			token = tokenUtil.createAuthToken(((User) auth.getPrincipal()).getEmail());
+
+			String json = gson.toJson(new AuthenticationSuccessResponse(token));
+
+			PrintWriter out = response.getWriter();
+			out.println(json);
+			out.flush();
+			out.close();
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		}
 	}
 
+	
 }

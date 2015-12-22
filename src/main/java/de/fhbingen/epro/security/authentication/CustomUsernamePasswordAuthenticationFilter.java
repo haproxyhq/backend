@@ -82,6 +82,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
 	private boolean verifyHeaderContentType(HttpServletRequest request) {
 		if(request.getContentType().equals("application/json")) return true;
+		if(request.getContentType().equals("application/json;charset=utf-8")) return true;
 		return false;
 	}
 

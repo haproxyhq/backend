@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.fhbingen.epro</groupId>
-	<artifactId>vl10</artifactId>
+	<artifactId>vl11</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>vl10</name>
+	<name>vl11</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -60,17 +60,12 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>9.4-1204-jdbc42</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
