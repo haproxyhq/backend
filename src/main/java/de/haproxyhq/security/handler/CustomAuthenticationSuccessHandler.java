@@ -19,6 +19,11 @@ import de.haproxyhq.security.responses.AuthenticationSuccessResponse;
 import de.haproxyhq.security.token.TokenUtil;
 import de.haproxyhq.sql.User;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Service
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	

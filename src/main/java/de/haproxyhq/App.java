@@ -8,6 +8,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.google.gson.Gson;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 @ComponentScan
 public class App {

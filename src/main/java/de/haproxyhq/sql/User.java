@@ -15,6 +15,11 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Entity
 @Table(name = "\"user\"")
 public class User extends AbstractEntity implements UserDetails {

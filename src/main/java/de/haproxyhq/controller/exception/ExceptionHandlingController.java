@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * 
- * @author Johannes Hiemer
+ * @author Johannes Hiemer, Maximilian Büttner
  *
  */
 @Controller

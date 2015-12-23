@@ -21,7 +21,7 @@ import de.haproxyhq.web.validation.ValidationEntityItem;
 /**
  * 
  * 
- * @author Johannes Hiemer
+ * @author Johannes Hiemer, Maximilian Büttner
  *
  */
 public final class ValidationUtils extends org.springframework.validation.ValidationUtils {

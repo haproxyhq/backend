@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @MappedSuperclass
 public class AbstractEntity {
 	

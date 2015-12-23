@@ -13,6 +13,11 @@ import de.haproxyhq.sql.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 import de.haproxyhq.web.validation.utils.ValidationUtils;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Component
 public class UserValidator implements Validator {
 
@@ -44,7 +49,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("email", "email.taken");
 		}
 
-		// TODO: besser in event-handler
+		// TODO: create a event-handler for this
 		user.setPassword(passwortEncoder.encode(user.getPassword()));
 	}
 

@@ -22,6 +22,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import de.haproxyhq.security.CustomUserDetailsService;
 import de.haproxyhq.security.token.TokenUtil;
 
+/**
+ * 
+ * @author Johannes Hiemer, Maximilian Büttner
+ *
+ */
 public class TokenAuthenticationFilter implements Filter {
 
 	private CustomUserDetailsService userDetailsService;

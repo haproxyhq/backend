@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import de.haproxyhq.sql.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

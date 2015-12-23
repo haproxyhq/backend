@@ -15,6 +15,11 @@ import com.google.gson.Gson;
 
 import de.haproxyhq.security.responses.AccessDeniedResponse;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 	
 	@Autowired

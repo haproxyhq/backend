@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Entity
 @Table(name = "\"right\"")
 public class Right extends AbstractEntity {

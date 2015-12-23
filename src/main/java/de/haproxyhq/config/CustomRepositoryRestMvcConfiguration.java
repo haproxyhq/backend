@@ -19,17 +19,18 @@ import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import de.haproxyhq.utils.PackageUtils;
 import de.haproxyhq.web.validation.UserValidator;
 
 /**
  * 
- * @author Johannes Hiemer.
+ * @author Johannes Hiemer, Maximilian Büttner
  *
  */
 @Configuration
 @EnableHypermediaSupport(type = { HypermediaType.HAL })
 @Import(value = { CustomMvcConfiguration.class, CustomSecurityConfiguration.class })
-@ComponentScan(basePackages = { "de.haproxyhq.web" })
+@ComponentScan(basePackages = { PackageUtils.WEB_PACKAGE })
 public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfiguration {
 
 	@Autowired

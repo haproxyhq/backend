@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * 
- * @author Johannes Hiemer.
+ * @author Johannes Hiemer, Maximilian Büttner
  *
  */
 @Component

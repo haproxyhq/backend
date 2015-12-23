@@ -1,5 +1,10 @@
 package de.haproxyhq.security.responses;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class AuthenticationSuccessResponse {
 	private String accessToken;
 

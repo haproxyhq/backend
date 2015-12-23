@@ -12,6 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import de.haproxyhq.security.CustomUserDetailsService;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired

@@ -1,5 +1,10 @@
 package de.haproxyhq.security.responses;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class AccessDeniedResponse {
 	private String message;
 	private boolean accessDenied;

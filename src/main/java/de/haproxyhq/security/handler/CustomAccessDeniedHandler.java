@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -14,9 +15,15 @@ import com.google.gson.Gson;
 
 import de.haproxyhq.security.responses.AccessDeniedResponse;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-	private Gson gson = new Gson();
+	@Autowired
+	private Gson gson;
 	
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)

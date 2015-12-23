@@ -25,6 +25,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
+import de.haproxyhq.utils.PackageUtils;
+
 import de.haproxyhq.security.CustomUserDetailsService;
 import de.haproxyhq.security.authentication.CustomAuthenticationProvider;
 import de.haproxyhq.security.authentication.CustomUsernamePasswordAuthenticationFilter;
@@ -37,13 +39,13 @@ import de.haproxyhq.security.token.TokenUtil;
 
 /**
  * 
- * @author Johannes Hiemer.
+ * @author Johannes Hiemer, Maximilian Büttner
  *
  */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan(basePackages = { "de.haproxyhq.security" })
+@ComponentScan(basePackages = { PackageUtils.SECURITY_PACKAGE })
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Bean

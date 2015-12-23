@@ -22,6 +22,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import de.haproxyhq.utils.PackageUtils;
+
 /**
  * 
  * @author Johannes Hiemer.
@@ -29,7 +31,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"de.haproxyhq.sql.repositories"})
+@EnableJpaRepositories(basePackages = { PackageUtils.SQL_REPOSITORY_PACKAGE })
 public class CustomJPARepositoryConfig {
 	
 	@Value("${database.hbm2ddl.auto}")
@@ -87,7 +89,7 @@ public class CustomJPARepositoryConfig {
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("de.haproxyhq.sql");
+		factory.setPackagesToScan(PackageUtils.SQL_PACKAGE);
 		factory.setDataSource(dataSource);
 		factory.afterPropertiesSet();
 		

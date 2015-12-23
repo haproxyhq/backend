@@ -8,6 +8,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+/**
+ * 
+ * @author Johannes Hiemer
+ *
+ */
 public class UsernamePasswordValidationErrors extends AbstractErrors {
 
 	private String name;

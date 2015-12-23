@@ -19,6 +19,11 @@ import de.haproxyhq.security.errors.UsernamePasswordValidationErrors;
 import de.haproxyhq.web.validation.ValidationEntity;
 import de.haproxyhq.web.validation.utils.ValidationUtils;
 
+/**
+ * 
+ * @author Johannes Hiemer, Maximilian Büttner
+ *
+ */
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
 	@Override
@@ -31,16 +36,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		} else if (request.getMethod().equals("POST")) {
 			if (verifyHeaderContentType(request) || request.getHeader("Accept") != null)
 				response.addHeader("Content-Type", request.getHeader("Accept"));
-			
-			if (verifyHeaderContentType(request)) {
-				//TODO: loginBean
-				/*
-				try {
-					loginBean = requestToLoginBean(request);
-				} catch (IOException e) {
-					response.setStatus(HttpStatus.BAD_REQUEST.value());
-				}*/
-			}
 			
 			username = obtainUsername(request);			
 			password = obtainPassword(request);

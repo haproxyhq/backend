@@ -9,6 +9,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @Entity
 @Table(name = "\"group\"")
 public class Group extends AbstractEntity{
