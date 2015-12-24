@@ -6,6 +6,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.haproxyhq.App;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(App.class)
 public class BaseContextConfiguration {

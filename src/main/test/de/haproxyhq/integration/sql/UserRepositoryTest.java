@@ -13,6 +13,11 @@ import de.haproxyhq.BaseContextConfiguration;
 import de.haproxyhq.sql.model.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 public class UserRepositoryTest extends BaseContextConfiguration {
 
 	private static final String FIRST_NAME = "Max";

@@ -17,6 +17,11 @@ import de.haproxyhq.BaseContextConfiguration;
 import de.haproxyhq.nosql.model.HaProxyConfig;
 import de.haproxyhq.nosql.repositories.HaProxyConfigRepository;
 
+/**
+ * 
+ * @author Maximilian Büttner
+ *
+ */
 @IntegrationTest
 public class HaProxyConfigRepositoryTest extends BaseContextConfiguration {
 
