@@ -65,7 +65,7 @@ public class CustomJPARepositoryConfig {
 		@Bean
 		public static PropertyPlaceholderConfigurer jpaPropertyPlaceholderConfigurer() {
 			PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-			propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application-model.properties"));
+			propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application-model-sql.properties"));
 			propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
 			return propertyPlaceholderConfigurer;
 		}
