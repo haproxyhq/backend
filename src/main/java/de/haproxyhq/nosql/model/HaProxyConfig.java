@@ -1,4 +1,4 @@
-package de.haproxyhq.nosql;
+package de.haproxyhq.nosql.model;
 
 import java.util.HashMap;
 import java.util.List;

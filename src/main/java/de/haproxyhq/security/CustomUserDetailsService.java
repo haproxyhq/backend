@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import de.haproxyhq.sql.User;
+import de.haproxyhq.sql.model.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 
 /**

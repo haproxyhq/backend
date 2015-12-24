@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import de.haproxyhq.security.responses.AuthenticationSuccessResponse;
 import de.haproxyhq.security.token.TokenUtil;
-import de.haproxyhq.sql.User;
+import de.haproxyhq.sql.model.User;
 
 /**
  * 

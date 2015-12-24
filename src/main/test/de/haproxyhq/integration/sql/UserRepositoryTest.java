@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import de.haproxyhq.BaseContextConfiguration;
-import de.haproxyhq.sql.User;
+import de.haproxyhq.sql.model.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 
 public class UserRepositoryTest extends BaseContextConfiguration {

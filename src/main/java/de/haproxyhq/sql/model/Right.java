@@ -1,4 +1,4 @@
-package de.haproxyhq.sql;
+package de.haproxyhq.sql.model;
 
 import java.util.Set;
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import de.haproxyhq.sql.User;
+import de.haproxyhq.sql.model.User;
 import de.haproxyhq.sql.repositories.UserRepository;
 import de.haproxyhq.web.validation.utils.ValidationUtils;
 

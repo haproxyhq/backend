@@ -1,4 +1,4 @@
-package de.haproxyhq.nosql;
+package de.haproxyhq.nosql.model;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;

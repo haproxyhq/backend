@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 
 import de.haproxyhq.BaseContextConfiguration;
-import de.haproxyhq.nosql.HaProxyConfig;
+import de.haproxyhq.nosql.model.HaProxyConfig;
 import de.haproxyhq.nosql.repositories.HaProxyConfigRepository;
 
 @IntegrationTest
