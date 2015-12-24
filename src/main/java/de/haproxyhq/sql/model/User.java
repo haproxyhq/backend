@@ -1,10 +1,13 @@
 package de.haproxyhq.sql.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -34,7 +37,7 @@ public class User extends AbstractEntity implements UserDetails {
 	
 	private String password;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "users_groups", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "group_id") , uniqueConstraints = @UniqueConstraint(columnNames = {
 			"user_id", "group_id" }) )
 	Set<Group> groups;
@@ -94,8 +97,12 @@ public class User extends AbstractEntity implements UserDetails {
 	@Transient
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.addAll(groups);
+		for(Group group: groups){
+			authorities.addAll(group.getRights());
+		}
+		return authorities;
 	}
 
 	@Transient

@@ -3,8 +3,11 @@ package de.haproxyhq.sql.model;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  * 
@@ -13,14 +16,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "\"right\"")
-public class Right extends AbstractEntity {
+public class Right extends AbstractEntity implements GrantedAuthority {
+
+	private static final long serialVersionUID = 6139817541217340461L;
+
 	private String name;
 	private String description;
 	private String key;
-	
-	@ManyToMany(mappedBy = "rights")
+
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "rights")
 	Set<Group> groups;
-	
+
 	public Right() {
 		super();
 	}
@@ -63,6 +69,9 @@ public class Right extends AbstractEntity {
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
-	
-	
+
+	@Override
+	public String getAuthority() {
+		return name;
+	}
 }
