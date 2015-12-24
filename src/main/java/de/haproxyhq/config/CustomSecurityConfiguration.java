@@ -96,9 +96,6 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, "/users/reset-password").permitAll()
 			.antMatchers(HttpMethod.PUT, "/users/*/password").permitAll()
 			.antMatchers(HttpMethod.PUT, "/users/*/email").permitAll()
-			.antMatchers(HttpMethod.GET, "/register").permitAll()
-			.antMatchers(HttpMethod.GET, "/login").permitAll()
-			.antMatchers(HttpMethod.GET, "/error").permitAll()
 			.antMatchers(HttpMethod.GET, "/static/**").permitAll()
 		
 			.antMatchers(HttpMethod.GET, "/").permitAll()
