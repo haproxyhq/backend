@@ -29,7 +29,7 @@ import de.haproxyhq.web.validation.UserValidator;
  */
 @Configuration
 @EnableHypermediaSupport(type = { HypermediaType.HAL })
-@Import(value = { CustomMvcConfiguration.class, CustomSecurityConfiguration.class })
+@Import(value = { CustomSecurityConfiguration.class })
 @ComponentScan(basePackages = { PackageUtils.WEB_PACKAGE })
 public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfiguration {
 
