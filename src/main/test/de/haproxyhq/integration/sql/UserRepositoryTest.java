@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import de.haproxyhq.BaseContextConfiguration;
@@ -28,7 +27,8 @@ public class UserRepositoryTest extends BaseContextConfiguration {
 	@Autowired
 	UserRepository userRepo;
 	
-	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	User testUser;
 	

@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import de.haproxyhq.sql.eventhandler.UserEventHandler;
 import de.haproxyhq.utils.PackageUtils;
 import de.haproxyhq.web.validation.UserValidator;
 
@@ -35,7 +36,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 
 	@Autowired
 	private UserValidator userValidator;
-	
+
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(CustomRepositoryRestMvcConfiguration.class);
 
@@ -62,23 +63,27 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 		v.addValidator("beforeCreate", userValidator);
 	}
 
+	@Bean
+	UserEventHandler userEventHandler() {
+		return new UserEventHandler();
+	}
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
 	}
-	
-    @Override
-    public void configureDefaultServletHandling(
-            DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    } 
-	
+
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+
 	@Bean(name = "messageSource")
-    public ReloadableResourceBundleMessageSource getMessageSource() {
-        ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
-        resource.setBasename("classpath:messages");
-        resource.setDefaultEncoding("UTF-8");
-        return resource;
-    }
+	public ReloadableResourceBundleMessageSource getMessageSource() {
+		ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
+		resource.setBasename("classpath:messages");
+		resource.setDefaultEncoding("UTF-8");
+		return resource;
+	}
 
 }

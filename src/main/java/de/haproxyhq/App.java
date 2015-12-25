@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.google.gson.Gson;
 
@@ -24,6 +26,11 @@ public class App {
 	@Bean
 	public Gson gsonBean() {
 		return new Gson();
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		 return new BCryptPasswordEncoder();
 	}
 
 }
