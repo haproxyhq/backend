@@ -8,16 +8,16 @@ package de.haproxyhq.nosql.model;
 public class Agent extends AbstractEntity {
 	
 	private String name;
-	private HaProxyConfig config;
+	private HAProxyConfig configHolder;
 	
 	public Agent() {
 		super();
 	}
 	
-	public Agent(String name, HaProxyConfig config) {
+	public Agent(String name, HAProxyConfig config) {
 		super();
 		this.name = name;
-		this.config = config;
+		this.configHolder = config;
 	}
 
 	public String getName() {
@@ -28,12 +28,12 @@ public class Agent extends AbstractEntity {
 		this.name = name;
 	}
 
-	public HaProxyConfig getConfig() {
-		return config;
+	public HAProxyConfig getConfig() {
+		return configHolder;
 	}
 
-	public void setConfig(HaProxyConfig config) {
-		this.config = config;
+	public void setConfig(HAProxyConfig config) {
+		this.configHolder = config;
 	}
 	
 	

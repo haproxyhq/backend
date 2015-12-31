@@ -3,7 +3,7 @@ package de.haproxyhq.nosql.repositories;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import de.haproxyhq.nosql.model.HaProxyConfig;
+import de.haproxyhq.nosql.model.HAProxyConfig;
 
 /**
  * 
@@ -11,6 +11,6 @@ import de.haproxyhq.nosql.model.HaProxyConfig;
  *
  */
 @RepositoryRestResource(collectionResourceRel = "configs", path = "configs")
-public interface HaProxyConfigRepository extends MongoRepository<HaProxyConfig, String>{
+public interface HAProxyConfigRepository extends MongoRepository<HAProxyConfig, String>{
 	
 }

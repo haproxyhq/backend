@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 
 import de.haproxyhq.BaseContextConfiguration;
-import de.haproxyhq.nosql.model.HaProxyConfig;
-import de.haproxyhq.nosql.repositories.HaProxyConfigRepository;
+import de.haproxyhq.nosql.model.HAProxyConfig;
+import de.haproxyhq.nosql.repositories.HAProxyConfigRepository;
 import de.haproxyhq.utils.TestUtils;
 
 /**
@@ -19,14 +19,14 @@ import de.haproxyhq.utils.TestUtils;
  *
  */
 @IntegrationTest
-public class HaProxyConfigRepositoryTest extends BaseContextConfiguration {
+public class HAProxyConfigRepositoryTest extends BaseContextConfiguration {
 
 	@Autowired
-	HaProxyConfigRepository configRepo;
+	HAProxyConfigRepository configRepo;
 
-	HaProxyConfig testHapc;
+	HAProxyConfig testHapc;
 	
-	public HaProxyConfigRepositoryTest() {
+	public HAProxyConfigRepositoryTest() {
 		super();
 	}
 	

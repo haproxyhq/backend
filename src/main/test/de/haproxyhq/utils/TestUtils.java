@@ -1,35 +1,57 @@
 package de.haproxyhq.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import de.haproxyhq.nosql.model.HaProxyConfig;
+import de.haproxyhq.nosql.model.HAProxyConfig;
 
 public class TestUtils {
 
-	public static HaProxyConfig createExampleHaProxyConfig(){
-		HashMap<String, List<String>> global = new HashMap<>();
-		global.put("deamon", new ArrayList<String>());
-		global.put("maxconn", Arrays.asList("256"));
-		
-		HashMap<String, List<String>> defaults = new HashMap<>();
-		defaults.put("mode", Arrays.asList("http"));
-		defaults.put("timeout", Arrays.asList("connect", "5000ms"));
-		
-		HashMap<String, List<String>> listen = new HashMap<>();
-		listen.put("_header", Arrays.asList("http-in"));
-		listen.put("server", Arrays.asList("server1", "127.0.0.1:8000", "maxconn", "32"));
-		
-		HashMap<String, List<String>> frontend = new HashMap<>();
-		frontend.put("_header", Arrays.asList("http-in"));
-		frontend.put("bind", Arrays.asList("*:80"));
-		
-		HashMap<String, List<String>> backend = new HashMap<>();
-		backend.put("_header", Arrays.asList("servers"));
-		backend.put("server", Arrays.asList("server1", "127.0.0.1:8000", "maxconn", "32"));
+	public static HAProxyConfig createExampleHaProxyConfig(){
 
-		return new HaProxyConfig(global, defaults, listen, frontend, backend);
+		HAProxyConfig configHolder = new HAProxyConfig();
+		
+		List<HAProxyConfig.Section> config = new ArrayList<>();
+		HAProxyConfig.Section globals = configHolder.new Section();
+		HAProxyConfig.Section backend = configHolder.new Section();
+		HAProxyConfig.Section listen = configHolder.new Section();
+		
+		HashMap<String, String> sectionGlobals = new HashMap<>();
+		sectionGlobals.put("type", "globals");
+		sectionGlobals.put("name", "");
+		
+		List<String> valuesGlobals = new ArrayList<>();
+		valuesGlobals.add("daemon");
+		valuesGlobals.add("maxconn 256");
+
+		globals.setSection(sectionGlobals);
+		globals.setValues(valuesGlobals);
+		
+		HashMap<String, String> sectionBackend = new HashMap<>();
+		sectionBackend.put("type", "backend");
+		sectionBackend.put("name", "mybackend");
+		
+		List<String> valuesBackend = new ArrayList<>();
+		valuesBackend.add("server1 127.0.0.1:8000 maxconn 32");
+		
+		backend.setSection(sectionBackend);
+		backend.setValues(valuesBackend);
+		
+		HashMap<String, String> sectionListen = new HashMap<>();
+		sectionListen.put("type", "listen");
+		sectionListen.put("name", "http-in");
+		
+		List<String> valuesListen = new ArrayList<>();
+		valuesListen.add("server server1 127.0.0.1:8000 maxconn 32");
+		
+		listen.setSection(sectionListen);
+		listen.setValues(valuesListen);
+		
+		config.add(globals);
+		config.add(backend);
+		config.add(listen);
+		
+		return new HAProxyConfig(config);
 	}
 }
