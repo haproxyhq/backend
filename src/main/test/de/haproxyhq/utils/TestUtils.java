@@ -13,9 +13,9 @@ public class TestUtils {
 		HAProxyConfig configHolder = new HAProxyConfig();
 		
 		List<HAProxyConfig.Section> config = new ArrayList<>();
-		HAProxyConfig.Section globals = configHolder.new Section();
-		HAProxyConfig.Section backend = configHolder.new Section();
-		HAProxyConfig.Section listen = configHolder.new Section();
+		HAProxyConfig.Section globals = new HAProxyConfig.Section();
+		HAProxyConfig.Section backend = new HAProxyConfig.Section();
+		HAProxyConfig.Section listen = new HAProxyConfig.Section();
 		
 		HashMap<String, String> sectionGlobals = new HashMap<>();
 		sectionGlobals.put("type", "globals");
@@ -52,6 +52,8 @@ public class TestUtils {
 		config.add(backend);
 		config.add(listen);
 		
-		return new HAProxyConfig(config);
+		configHolder.setConfig(config);
+		
+		return configHolder;
 	}
 }

@@ -21,7 +21,7 @@ public class HAProxyConfig extends AbstractEntity {
 		this.config = config;
 	}
 
-	public class Section {
+	public static class Section {
 		HashMap<String, String> section;
 		List<String> values;
 
