@@ -14,10 +14,10 @@ public class Agent extends AbstractEntity {
 		super();
 	}
 	
-	public Agent(String name, HAProxyConfig config) {
+	public Agent(String name, HAProxyConfig configHolder) {
 		super();
 		this.name = name;
-		this.configHolder = config;
+		this.configHolder = configHolder;
 	}
 
 	public String getName() {
@@ -28,13 +28,12 @@ public class Agent extends AbstractEntity {
 		this.name = name;
 	}
 
-	public HAProxyConfig getConfig() {
+	public HAProxyConfig getConfigHolder() {
 		return configHolder;
 	}
 
-	public void setConfig(HAProxyConfig config) {
-		this.configHolder = config;
+	public void setConfigHolder(HAProxyConfig configHolder) {
+		this.configHolder = configHolder;
 	}
-	
 	
 }
