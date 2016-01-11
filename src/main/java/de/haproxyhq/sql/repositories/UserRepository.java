@@ -1,6 +1,7 @@
 package de.haproxyhq.sql.repositories;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import de.haproxyhq.sql.model.User;
 
@@ -11,6 +12,6 @@ import de.haproxyhq.sql.model.User;
  */
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
-	User findUserByEmail(String email);
+	User findUserByEmail(@Param(value = "email") String email);
 
 }
