@@ -20,7 +20,9 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import de.haproxyhq.sql.eventhandler.UserEventHandler;
+import de.haproxyhq.sql.model.User;
 import de.haproxyhq.utils.PackageUtils;
+import de.haproxyhq.web.validation.UserUpdateValidator;
 import de.haproxyhq.web.validation.UserValidator;
 
 /**
@@ -31,12 +33,14 @@ import de.haproxyhq.web.validation.UserValidator;
 @Configuration
 @EnableHypermediaSupport(type = { HypermediaType.HAL })
 @Import(value = { CustomSecurityConfiguration.class })
-@ComponentScan(basePackages = { PackageUtils.WEB_PACKAGE })
 public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfiguration {
 
 	@Autowired
 	private UserValidator userValidator;
 
+	@Autowired
+	private UserUpdateValidator userUpdateValidator;
+	
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(CustomRepositoryRestMvcConfiguration.class);
 
@@ -61,6 +65,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	@Override
 	protected void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener v) {
 		v.addValidator("beforeCreate", userValidator);
+		v.addValidator("beforeSave", userUpdateValidator);
 	}
 
 	@Bean

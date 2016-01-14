@@ -17,10 +17,10 @@ import de.haproxyhq.web.validation.utils.ValidationUtils;
  *
  */
 @Component
-public class UserValidator implements Validator {
+public class UserUpdateValidator implements Validator {
 
-	@Autowired()
-	private UserRepository userRepository;
+	//@Autowired()
+	//private UserRepository userRepository;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -29,10 +29,12 @@ public class UserValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		//User user = (User) target;
+		//TODO: do magic with reflection to check if fields are set and then not empty
 		ValidationUtils.rejectBlank(errors, "firstName", "field.required");
 		ValidationUtils.rejectBlank(errors, "name", "field.required");
 		ValidationUtils.rejectBlank(errors, "email", "field.required");
-		ValidationUtils.rejectBlank(errors, "password", "field.required");
+		/*ValidationUtils.rejectBlank(errors, "password", "field.required");
 		User user = (User) target;
 		if (user.getPassword().length() < 7)
 			errors.rejectValue("password", "field.too.short");
@@ -41,8 +43,9 @@ public class UserValidator implements Validator {
 		if (!EmailValidator.getInstance(true).isValid(user.getEmail()))
 			errors.rejectValue("email", "email.invalid");
 
+		//find the email -> if found, check if found.id=this.id
 		if (userRepository.findUserByEmail(user.getEmail()) != null) {
 			errors.rejectValue("email", "email.taken");
-		}
+		}*/
 	}
 }

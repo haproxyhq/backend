@@ -19,6 +19,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
 			throws IOException, ServletException {
+		//TODO: send authorization required
 		response.sendRedirect("/login");
 	}
 

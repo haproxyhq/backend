@@ -45,7 +45,6 @@ import de.haproxyhq.security.token.TokenUtil;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan(basePackages = { PackageUtils.SECURITY_PACKAGE })
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Bean
