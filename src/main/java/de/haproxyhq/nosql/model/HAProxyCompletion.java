@@ -17,17 +17,17 @@ public class HAProxyCompletion extends AbstractEntity {
 	public static class Section {
 		private String keyword;
 		private String params;
-		private String id;
+		private String anchor;
 
 		public Section() {
 			super();
 		}
 
-		public Section(String keyword, String params, String id) {
+		public Section(String keyword, String params, String anchor) {
 			super();
 			this.keyword = keyword;
 			this.params = params;
-			this.id = id;
+			this.anchor = anchor;
 		}
 
 		public String getKeyword() {
@@ -46,12 +46,12 @@ public class HAProxyCompletion extends AbstractEntity {
 			this.params = params;
 		}
 
-		public String getId() {
-			return id;
+		public String getAnchor() {
+			return anchor;
 		}
 
-		public void setId(String id) {
-			this.id = id;
+		public void setAnchor(String anchor) {
+			this.anchor = anchor;
 		}
 
 	}
