@@ -24,7 +24,7 @@ public class App {
 	}
 	
 	@Bean
-	public Gson gsonBean() {
+	public Gson gson() {
 		return new Gson();
 	}
 	

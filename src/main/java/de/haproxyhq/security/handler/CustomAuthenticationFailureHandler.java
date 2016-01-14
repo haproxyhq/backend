@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
@@ -20,6 +21,7 @@ import de.haproxyhq.security.responses.AccessDeniedResponse;
  * @author Maximilian Büttner
  *
  */
+@Service
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 	
 	@Autowired
