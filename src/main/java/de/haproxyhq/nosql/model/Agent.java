@@ -6,14 +6,17 @@ package de.haproxyhq.nosql.model;
  *
  */
 public class Agent extends AbstractEntity {
-	
+
 	private String name;
+	private String description;
+	private String ip;
+	private String version;
 	private HAProxyConfig configHolder;
-	
+
 	public Agent() {
 		super();
 	}
-	
+
 	public Agent(String name, HAProxyConfig configHolder) {
 		super();
 		this.name = name;
@@ -35,5 +38,29 @@ public class Agent extends AbstractEntity {
 	public void setConfigHolder(HAProxyConfig configHolder) {
 		this.configHolder = configHolder;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
 }
