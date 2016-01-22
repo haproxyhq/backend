@@ -1,6 +1,9 @@
 package de.haproxyhq.mqtt.client;
 
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PreDestroy;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -45,4 +48,13 @@ public class ConfigPublisher {
 			e.printStackTrace();
 		}
 	}
+	
+	@PreDestroy
+    public void disconnect() {
+        try {
+			this.mqttClient.disconnect();
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}
+    }
 }
