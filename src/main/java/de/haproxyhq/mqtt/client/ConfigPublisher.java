@@ -52,7 +52,9 @@ public class ConfigPublisher {
 	@PreDestroy
     public void disconnect() {
         try {
-			this.mqttClient.disconnect();
+        	if(this.mqttClient.isConnected()) {
+        		this.mqttClient.disconnect();
+        	}
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
