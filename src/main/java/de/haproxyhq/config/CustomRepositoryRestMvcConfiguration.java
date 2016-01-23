@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -20,8 +19,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import de.haproxyhq.sql.eventhandler.UserEventHandler;
-import de.haproxyhq.sql.model.User;
-import de.haproxyhq.utils.PackageUtils;
+import de.haproxyhq.web.validation.AgentUpdateValidator;
 import de.haproxyhq.web.validation.UserUpdateValidator;
 import de.haproxyhq.web.validation.UserValidator;
 
@@ -40,6 +38,9 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 
 	@Autowired
 	private UserUpdateValidator userUpdateValidator;
+	
+	@Autowired
+	private AgentUpdateValidator agentUpdateValidator;
 	
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(CustomRepositoryRestMvcConfiguration.class);
@@ -66,6 +67,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	protected void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener v) {
 		v.addValidator("beforeCreate", userValidator);
 		v.addValidator("beforeSave", userUpdateValidator);
+		v.addValidator("beforeSave", agentUpdateValidator);
 	}
 
 	@Bean

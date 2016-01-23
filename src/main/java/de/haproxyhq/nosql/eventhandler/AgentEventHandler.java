@@ -31,7 +31,6 @@ public class AgentEventHandler {
 	 */
 	@HandleAfterSave
 	public void publishConfig(Agent agent) {
-		System.out.println("-----------AFTERSAVE-------------");
 		configPublisher.publishAgentConfig(agent.getId());
 	}
 }
