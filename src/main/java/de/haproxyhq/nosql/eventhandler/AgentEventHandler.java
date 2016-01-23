@@ -3,6 +3,7 @@ package de.haproxyhq.nosql.eventhandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleAfterSave;
+import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 
@@ -28,9 +29,9 @@ public class AgentEventHandler {
 	 * 
 	 * @param agent
 	 */
-	@HandleAfterCreate
 	@HandleAfterSave
 	public void publishConfig(Agent agent) {
+		System.out.println("-----------AFTERSAVE-------------");
 		configPublisher.publishAgentConfig(agent.getId());
 	}
 }
