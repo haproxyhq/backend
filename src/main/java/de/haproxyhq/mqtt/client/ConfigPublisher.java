@@ -41,7 +41,9 @@ public class ConfigPublisher {
 	 */
 	public void publishAgentConfig(String agentId) {
 		try {
-			this.mqttClient.publish("/haproxyhq/agents/" + agentId, new MqttMessage());
+			if(this.mqttClient.isConnected()) {
+				this.mqttClient.publish("/haproxyhq/agents/" + agentId, new MqttMessage());
+			}
 		} catch (MqttPersistenceException e) {
 			e.printStackTrace();
 		} catch (MqttException e) {
