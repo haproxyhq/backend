@@ -49,6 +49,9 @@ public class ConfigPublisher {
 		}
 	}
 	
+	/**
+	 * disconnects the MQTT client
+	 */
 	@PreDestroy
     public void disconnect() {
         try {
