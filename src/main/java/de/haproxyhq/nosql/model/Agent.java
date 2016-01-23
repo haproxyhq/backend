@@ -12,6 +12,7 @@ public class Agent extends AbstractEntity {
 	private String ip;
 	private String version;
 	private HAProxyConfig configHolder;
+	private long configTimestamp;
 
 	public Agent() {
 		super();
@@ -63,4 +64,11 @@ public class Agent extends AbstractEntity {
 		this.version = version;
 	}
 
+	public long getConfigTimestamp() {
+		return configTimestamp;
+	}
+
+	public void setConfigTimestamp(long configTimestamp) {
+		this.configTimestamp = configTimestamp;
+	}
 }
