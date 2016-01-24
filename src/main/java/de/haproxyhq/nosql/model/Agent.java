@@ -13,6 +13,8 @@ public class Agent extends AbstractEntity {
 	private String version;
 	private HAProxyConfig configHolder;
 	private long configTimestamp;
+	private long agentHeartbeatTimestamp;
+	private long haproxyHeartbeatTimestamp;
 
 	public Agent() {
 		super();
@@ -70,5 +72,21 @@ public class Agent extends AbstractEntity {
 
 	public void setConfigTimestamp(long configTimestamp) {
 		this.configTimestamp = configTimestamp;
+	}
+
+	public long getHaproxyHeartbeatTimestamp() {
+		return haproxyHeartbeatTimestamp;
+	}
+
+	public void setHaproxyHeartbeatTimestamp(long haproxyHeartbeatTimestamp) {
+		this.haproxyHeartbeatTimestamp = haproxyHeartbeatTimestamp;
+	}
+
+	public long getAgentHeartbeatTimestamp() {
+		return agentHeartbeatTimestamp;
+	}
+
+	public void setAgentHeartbeatTimestamp(long agentHeartbeatTimestamp) {
+		this.agentHeartbeatTimestamp = agentHeartbeatTimestamp;
 	}
 }
