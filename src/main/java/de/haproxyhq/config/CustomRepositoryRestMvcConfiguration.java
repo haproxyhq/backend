@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import de.haproxyhq.nosql.model.Agent;
 import de.haproxyhq.sql.eventhandler.UserEventHandler;
 import de.haproxyhq.web.validation.AgentUpdateValidator;
 import de.haproxyhq.web.validation.UserUpdateValidator;
@@ -57,6 +58,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
 		config.setReturnBodyOnCreate(true);
 		config.setReturnBodyOnUpdate(true);
+		config.exposeIdsFor(Agent.class);
 		config.setMaxPageSize(100);
 		config.setDefaultPageSize(25);
 		config.setDefaultMediaType(MediaType.APPLICATION_JSON);
