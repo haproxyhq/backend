@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 @ComponentScan
 public class App {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}

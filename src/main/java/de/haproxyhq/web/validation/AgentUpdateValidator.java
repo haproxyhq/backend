@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import de.haproxyhq.mqtt.client.ConfigPublisher;
+import de.haproxyhq.mqtt.client.MqttPublisher;
 import de.haproxyhq.nosql.model.Agent;
 import de.haproxyhq.nosql.repositories.AgentRepository;
 import de.haproxyhq.web.validation.utils.ValidationUtils;
@@ -24,7 +24,7 @@ public class AgentUpdateValidator implements Validator {
 	 * is used to publish config to the agent in case the config he sends is outdated
 	 */
 	@Autowired
-	ConfigPublisher configPublisher;
+	MqttPublisher configPublisher;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
