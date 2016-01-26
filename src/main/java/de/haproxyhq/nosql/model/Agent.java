@@ -1,5 +1,7 @@
 package de.haproxyhq.nosql.model;
 
+import de.haproxyhq.nosql.model.AgentHeartbeat.AgentHeartbeatStatus;
+
 /**
  * 
  * @author Maximilian Büttner
@@ -24,6 +26,17 @@ public class Agent extends AbstractEntity {
 		super();
 		this.name = name;
 		this.configHolder = configHolder;
+	}
+	
+	public AgentHeartbeat getAgentHeartbeat() {
+		long currentTimestamp = System.currentTimeMillis();
+		
+		AgentHeartbeatStatus heartbeatStatus = new AgentHeartbeatStatus(
+			Math.abs(this.getAgentHeartbeatTimestamp() - currentTimestamp) < 120000,
+			Math.abs(this.getHaproxyHeartbeatTimestamp() - currentTimestamp) < 120000
+		);
+		
+		return new AgentHeartbeat(this.getId(), heartbeatStatus);
 	}
 
 	public String getName() {
