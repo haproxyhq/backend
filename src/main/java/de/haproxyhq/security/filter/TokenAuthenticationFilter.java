@@ -19,8 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import de.haproxyhq.security.CustomAgentDetailsService;
 import de.haproxyhq.security.CustomUserDetailsService;
 import de.haproxyhq.security.token.TokenUtil;
+import de.haproxyhq.utils.AgentUtils;
 
 /**
  * 
@@ -30,6 +32,7 @@ import de.haproxyhq.security.token.TokenUtil;
 public class TokenAuthenticationFilter implements Filter {
 
 	private CustomUserDetailsService userDetailsService;
+	private CustomAgentDetailsService agentDetailsService;
 
 	private TokenUtil tokenUtil;
 
@@ -81,6 +84,9 @@ public class TokenAuthenticationFilter implements Filter {
 
 	private UserDetails loadUserDetails(HttpServletRequest request) {
 		String username = tokenUtil.getUserName(request);
+		if (username != null && username.startsWith(AgentUtils.agentPrefix)) {
+			return agentDetailsService.loadUserByUsername(username);
+		}
 		return (username != null) ? userDetailsService.loadUserByUsername(username) : null;
 	}
 
@@ -103,6 +109,10 @@ public class TokenAuthenticationFilter implements Filter {
 
 	public void setUserDetailsService(CustomUserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
+	}
+
+	public void setAgentDetailsService(CustomAgentDetailsService agentDetailsService) {
+		this.agentDetailsService = agentDetailsService;
 	}
 
 }

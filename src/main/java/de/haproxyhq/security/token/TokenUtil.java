@@ -65,7 +65,7 @@ public class TokenUtil {
            String[] split = decryptedValue.split("\\|");
            String username = split[0];
            DateTime timestamp =  new DateTime(Long.parseLong(split[1]));
-           if (timestamp.isAfter(DateTime.now().minus(sessionMaxAge))) {
+           if (timestamp.isEqual(new DateTime(0)) || timestamp.isAfter(DateTime.now().minus(sessionMaxAge))) {
                return username;
            }
        } catch (IOException | GeneralSecurityException e) {
@@ -86,6 +86,11 @@ public class TokenUtil {
    public String createAuthToken(String userName) throws IOException, GeneralSecurityException {
        String value = userName + "|" + System.currentTimeMillis();
        return encryptionUtil.encrypt(value, seed);
+   }
+   
+   public String createInfiniteAuthToken(String prefix) throws IOException, GeneralSecurityException {
+	   String value = prefix + "|0";
+	   return encryptionUtil.encrypt(value, seed);
    }
 
    private Period getSessionMaxAge() {

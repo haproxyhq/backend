@@ -11,7 +11,6 @@ import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
@@ -25,8 +24,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
-import de.haproxyhq.utils.PackageUtils;
-
+import de.haproxyhq.security.CustomAgentDetailsService;
 import de.haproxyhq.security.CustomUserDetailsService;
 import de.haproxyhq.security.authentication.CustomAuthenticationProvider;
 import de.haproxyhq.security.authentication.CustomUsernamePasswordAuthenticationFilter;
@@ -60,6 +58,9 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
+	
+	@Autowired
+	private CustomAgentDetailsService customAgentDetailsService;
 	
  	@Bean
     @Override
@@ -109,6 +110,7 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private Filter authenticationFilter() {
         TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
         tokenAuthenticationFilter.setUserDetailsService(customUserDetailsService);
+        tokenAuthenticationFilter.setAgentDetailsService(customAgentDetailsService);
         tokenAuthenticationFilter.setTokenUtil(tokenUtil);
         return tokenAuthenticationFilter;
     }
