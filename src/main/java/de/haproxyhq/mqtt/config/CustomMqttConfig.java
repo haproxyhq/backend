@@ -63,5 +63,13 @@ public class CustomMqttConfig {
 	public String getMqttTopicPrefix() {
 		return this.mqttTopicPrefix;
 	}
+	
+	public String getMqttHost() {
+		return this.mqttHost;
+	}
+
+	public String getMqttClientId() {
+		return this.mqttClientId;
+	}
 
 }
