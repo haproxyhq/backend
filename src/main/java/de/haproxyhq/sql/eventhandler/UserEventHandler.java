@@ -31,11 +31,11 @@ public class UserEventHandler {
 	@HandleBeforeCreate
 	public void handleBeforeCreate(User user) {
 		if(user.getPassword() == null) {
-			user.setPassword(KeyGenerators.secureRandom().generateKey().toString());
+			user.setPassword(KeyGenerators.string().generateKey());
 		}
 		
 		this.sendUserMail(user);
-		
+
 		user.setPassword(passwordEncoder.encode(user.getPassword()));			
 	}
 	
@@ -44,7 +44,7 @@ public class UserEventHandler {
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 		try {
 			mimeMessageHelper.setSubject(messageSource.getMessage("passwordemail.subject", null, Locale.getDefault()));
-			mimeMessageHelper.setTo("jdepoix@seibert-media.net");
+			mimeMessageHelper.setTo(user.getEmail());
 			mimeMessageHelper.setText(String.format(
 					messageSource.getMessage("passwordemail.text", null, Locale.getDefault()),
 					user.getFirstName(),
