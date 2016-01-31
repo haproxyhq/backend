@@ -2,6 +2,7 @@ package de.haproxyhq.sql.eventhandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
+import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,4 +18,5 @@ public class UserEventHandler {
 	public void handleBeforeCreate(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 	}
+
 }
