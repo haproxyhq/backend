@@ -32,12 +32,15 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectBlank(errors, "firstName", "field.required");
 		ValidationUtils.rejectBlank(errors, "name", "field.required");
 		ValidationUtils.rejectBlank(errors, "email", "field.required");
-		ValidationUtils.rejectBlank(errors, "password", "field.required");
 		User user = (User) target;
-		/*if (user.getPassword().length() < 7)
-			errors.rejectValue("password", "field.too.short");
-		if (!user.getPassword().matches("[A-Za-z0-9]+"))
-			errors.rejectValue("password", "field.not.alphanumeric");*/
+		/*
+		if(user.getPassword() != null) {
+			if (user.getPassword().length() < 7)
+				errors.rejectValue("password", "field.too.short");
+			if (!user.getPassword().matches("[A-Za-z0-9]+"))
+				errors.rejectValue("password", "field.not.alphanumeric");
+		}
+		*/
 		if (!EmailValidator.getInstance(true).isValid(user.getEmail()))
 			errors.rejectValue("email", "email.invalid");
 
