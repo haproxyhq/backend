@@ -6,11 +6,13 @@ package de.haproxyhq.sql.config;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -33,35 +35,35 @@ import de.haproxyhq.utils.PackageUtils;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { PackageUtils.SQL_REPOSITORY_PACKAGE })
 public class CustomJPARepositoryConfig {
-	
+
 	@Value("${database.hbm2ddl.auto}")
 	private String hbm2ddlAuto;
-	
+
 	@Value("${database.show_sql")
 	private String hibernateShowSql;
-	
+
 	@Value("${database.driverClassName")
 	private String driverClassName;
-	
+
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Configuration
 	@Profile("default")
 	static class Default {
-		
+
 		@Value("${database.url}")
 		private String databaseUrl;
-		
+
 		@Value("${database.user}")
-	    private String databaseUser;
-		
+		private String databaseUser;
+
 		@Value("${database.password}")
-	    private String databasePassword;
-		
+		private String databasePassword;
+
 		@Value("${database.driver}")
 		private String databaseDriver;
-		
+
 		@Bean
 		public static PropertyPlaceholderConfigurer jpaPropertyPlaceholderConfigurer() {
 			PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
@@ -69,19 +71,27 @@ public class CustomJPARepositoryConfig {
 			propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
 			return propertyPlaceholderConfigurer;
 		}
-		
+
 		@Bean
 		public DataSource dataSource() {
 			DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 			driverManagerDataSource.setDriverClassName(databaseDriver);
 			driverManagerDataSource.setUrl(databaseUrl);
 			driverManagerDataSource.setUsername(databaseUser);
-			driverManagerDataSource.setPassword(databasePassword);			
+			driverManagerDataSource.setPassword(databasePassword);
 			return driverManagerDataSource;
 		}
 	}
-	
-	@Bean
+
+	@Bean(initMethod = "migrate")
+	Flyway flyway() {
+		Flyway flyway = new Flyway();
+		flyway.setBaselineOnMigrate(true);
+		flyway.setDataSource(dataSource);
+		return flyway;
+	}
+
+	@Bean @DependsOn("flyway")
 	public EntityManagerFactory entityManagerFactory() {
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setGenerateDdl(Boolean.parseBoolean(hbm2ddlAuto));
@@ -92,18 +102,18 @@ public class CustomJPARepositoryConfig {
 		factory.setPackagesToScan(PackageUtils.SQL_PACKAGE);
 		factory.setDataSource(dataSource);
 		factory.afterPropertiesSet();
-		
+
 		return factory.getObject();
 	}
-	
+
 	@Bean
 	public PlatformTransactionManager transactionManager() {
 		return new JpaTransactionManager(entityManagerFactory());
 	}
-	
+
 	@Bean
 	public HibernateExceptionTranslator hibernateExceptionTranslator() {
 		return new HibernateExceptionTranslator();
 	}
-		
+
 }
