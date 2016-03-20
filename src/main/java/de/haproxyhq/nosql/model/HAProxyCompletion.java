@@ -4,10 +4,11 @@ import java.util.List;
 
 /**
  * 
- * @author Maximilian Büttner
+ * @author Maximilian Büttner.
  *
  */
-public class HAProxyCompletion extends AbstractEntity {
+public class HaProxyCompletion extends AbstractEntity {
+	
 	private String url;
 
 	private String version;
@@ -56,11 +57,11 @@ public class HAProxyCompletion extends AbstractEntity {
 
 	}
 
-	public HAProxyCompletion() {
+	public HaProxyCompletion() {
 		super();
 	}
 
-	public HAProxyCompletion(String url, String version, List<Section> data) {
+	public HaProxyCompletion(String url, String version, List<Section> data) {
 		super();
 		this.url = url;
 		this.version = version;

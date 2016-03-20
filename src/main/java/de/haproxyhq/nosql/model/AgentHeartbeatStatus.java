@@ -1,18 +1,13 @@
 package de.haproxyhq.nosql.model;
 
 /**
- * this is a model to hold information about the heartbeat of a agent entity
  * 
- * @author jdepoix
+ * @author Jonas Depoix
  */
 public class AgentHeartbeatStatus {
-	/**
-	 * whether the agent is alive, or not
-	 */
+
 	private boolean agentAlive;
-	/**
-	 * whether the haproxy monitored by this agent is alive, or not
-	 */
+
 	private boolean haproxyAlive;
 	
 	public AgentHeartbeatStatus(boolean agentAlive, boolean haproxyAlive) {

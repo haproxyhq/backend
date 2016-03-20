@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: haproxy-backend
+---  
+spring:
+  profiles: default,development
+server:
+  port: 8081
+  mail:
+    host: smtp.gmail.com
+    username: XXXXX
+    password: XXXXX
+    properties:      
+      smtp:
+        auth: true
+        ssl: 
+          enable: true
+        socketFactory:
+          port: 465
+          class: javax.net.ssl.SSLSocketFactory
+          fallback: false
+
+database:
+  nosql:
+    host: 172.16.248.144
+    user: haproxy
+    password: haproxy
+    port: 27017
+    database: haproxy
+
+mqtt:
+  host: tcp://192.168.50.10:1883
+  client:
+    id: haproxyhq/backend
+  topic:
+    prefix: /haproxyhq/agents/
+    
+
+  

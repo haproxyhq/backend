@@ -1,16 +1,16 @@
 package de.haproxyhq.nosql.model;
 
 /**
- * entity for config schemas holding the config and metadata
  * 
- * @author jdepoix
+ * @author Jonas Depoix.
  */
 public class Schema extends AbstractEntity {
+	
 	private String name;
 	private String description;
 	private String version;
 
-	private HAProxyConfig configHolder;
+	private HaProxyConfig configHolder;
 
 	public String getName() {
 		return name;
@@ -28,11 +28,11 @@ public class Schema extends AbstractEntity {
 		this.description = description;
 	}
 
-	public HAProxyConfig getConfigHolder() {
+	public HaProxyConfig getConfigHolder() {
 		return configHolder;
 	}
 
-	public void setConfigHolder(HAProxyConfig configHolder) {
+	public void setConfigHolder(HaProxyConfig configHolder) {
 		this.configHolder = configHolder;
 	}
 

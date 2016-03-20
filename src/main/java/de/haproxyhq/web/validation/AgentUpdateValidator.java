@@ -11,18 +11,15 @@ import de.haproxyhq.nosql.repositories.AgentRepository;
 import de.haproxyhq.web.validation.utils.ValidationUtils;
 
 /**
- * this validator checks if a update to a config is actually newer and rejects the update in case it isn't
  * 
- * @author jdepoix
+ * @author Jonas Depoix.
  */
 @Component
 public class AgentUpdateValidator implements Validator {
+	
 	@Autowired
 	AgentRepository agentRepository;
 	
-	/**
-	 * is used to publish config to the agent in case the config he sends is outdated
-	 */
 	@Autowired
 	MqttPublisher configPublisher;
 	

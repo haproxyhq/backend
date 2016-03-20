@@ -1,14 +1,12 @@
 package de.haproxyhq.nosql.model;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.springframework.data.annotation.Id;
 
 /**
  * 
- * @author Maximilian Büttner
+ * @author Maximilian Büttner.
  *
  */
-@MappedSuperclass
 public class AbstractEntity {
 	
 	@Id

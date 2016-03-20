@@ -1,14 +1,11 @@
 /**
  * 
  */
-package de.haproxyhq.nosql.config;
+package de.haproxyhq.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -46,14 +43,6 @@ public class CustomMongoDBRepositoryConfig {
 		
 		@Value("${database.nosql.database}")
 		private String databaseName;
-		
-		@Bean
-		public static PropertyPlaceholderConfigurer nosqlPropertyPlaceholderConfigurer() {
-			PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-			propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application-model-nosql.properties"));
-			propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
-			return propertyPlaceholderConfigurer;
-		}
 		
 		@Override
 		protected String getDatabaseName() {

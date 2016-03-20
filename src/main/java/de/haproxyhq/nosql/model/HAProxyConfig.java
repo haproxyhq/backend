@@ -5,18 +5,18 @@ import java.util.List;
 
 /**
  * 
- * @author Maximilian Büttner
+ * @author Maximilian Büttner.
  *
  */
-public class HAProxyConfig extends AbstractEntity {
+public class HaProxyConfig extends AbstractEntity {
 	
 	List<Section> config;
 	
-	public HAProxyConfig() {
+	public HaProxyConfig() {
 		super();
 	}
 
-	public HAProxyConfig(List<Section> config) {
+	public HaProxyConfig(List<Section> config) {
 		super();
 		this.config = config;
 	}

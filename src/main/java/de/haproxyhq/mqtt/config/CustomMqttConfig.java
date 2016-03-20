@@ -1,10 +1,8 @@
 package de.haproxyhq.mqtt.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
@@ -15,7 +13,7 @@ import org.springframework.messaging.MessageHandler;
 
 /**
  * 
- * @author Maximilian Büttner
+ * @author Maximilian Büttner, Johannes Hiemer.
  *
  */
 @Configuration
@@ -29,14 +27,6 @@ public class CustomMqttConfig {
 
 	@Value("${mqtt.topic.prefix}")
 	private String mqttTopicPrefix;
-
-	@Bean
-	public static PropertyPlaceholderConfigurer mqttPropertyPlaceholderConfigurer() {
-		PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-		propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application-model-mqtt.properties"));
-		propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
-		return propertyPlaceholderConfigurer;
-	}
 
 	@Bean
 	public MqttPahoClientFactory mqttClientFactory() {
