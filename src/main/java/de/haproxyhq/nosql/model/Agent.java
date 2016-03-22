@@ -1,9 +1,12 @@
 package de.haproxyhq.nosql.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * 
- * @author Maximilian Büttner, Jonas Depoix.
+ * @author Maximilian Büttner, Jonas Depoix, Johannes Hiemer.
  */
+@Document
 public class Agent extends AbstractEntity {
 
 	private String name;
@@ -16,10 +19,9 @@ public class Agent extends AbstractEntity {
 	
 	private String authToken;
 	
-	private HaProxyConfig configHolder;
+	private HaProxyConfig haProxyConfig;
 	
 	private long configTimestamp;
-	
 	
 	private long agentHeartbeatTimestamp;
 	
@@ -29,10 +31,10 @@ public class Agent extends AbstractEntity {
 		super();
 	}
 
-	public Agent(String name, HaProxyConfig configHolder) {
+	public Agent(String name, HaProxyConfig haProxyConfig) {
 		super();
 		this.name = name;
-		this.configHolder = configHolder;
+		this.haProxyConfig = haProxyConfig;
 	}
 
 	public AgentHeartbeatStatus getAgentHeartbeat() {
@@ -50,12 +52,12 @@ public class Agent extends AbstractEntity {
 		this.name = name;
 	}
 
-	public HaProxyConfig getConfigHolder() {
-		return configHolder;
+	public HaProxyConfig getHaProxyConfig() {
+		return haProxyConfig;
 	}
 
-	public void setConfigHolder(HaProxyConfig configHolder) {
-		this.configHolder = configHolder;
+	public void setHaProxyConfig(HaProxyConfig haProxyConfig) {
+		this.haProxyConfig = haProxyConfig;
 	}
 
 	public String getDescription() {

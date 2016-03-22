@@ -1,44 +1,47 @@
 package de.haproxyhq.nosql.model;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 
- * @author Maximilian Büttner.
+ * @author Maximilian Büttner, Johannes Hiemer.
  *
  */
+@Document
 public class HaProxyConfig extends AbstractEntity {
 	
-	List<Section> config;
+	List<Section> sections;
 	
 	public HaProxyConfig() {
 		super();
 	}
 
-	public HaProxyConfig(List<Section> config) {
+	public HaProxyConfig(List<Section> sections) {
 		super();
-		this.config = config;
+		this.sections = sections;
 	}
 
 	public static class Section {
-		HashMap<String, String> section;
+		Map<String, String> section;
 		List<String> values;
 
 		public Section() {
 			super();
 		}
 
-		public Section(HashMap<String, String> section, List<String> values) {
+		public Section(Map<String, String> section, List<String> values) {
 			super();
 			this.section = section;
 			this.values = values;
 		}
 
-		public HashMap<String, String> getSection() {
+		public Map<String, String> getSection() {
 			return section;
 		}
-		public void setSection(HashMap<String, String> section) {
+		public void setSection(Map<String, String> section) {
 			this.section = section;
 		}
 		public List<String> getValues() {
@@ -49,12 +52,12 @@ public class HaProxyConfig extends AbstractEntity {
 		}
 	}
 
-	public List<Section> getConfig() {
-		return config;
+	public List<Section> getSections() {
+		return sections;
 	}
 
-	public void setConfig(List<Section> config) {
-		this.config = config;
+	public void setSections(List<Section> sections) {
+		this.sections = sections;
 	}
 
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.haproxyhq.config;
+package de.haproxyhq.config.nosql;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

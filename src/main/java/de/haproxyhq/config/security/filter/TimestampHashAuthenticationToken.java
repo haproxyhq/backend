@@ -21,6 +21,8 @@ public class TimestampHashAuthenticationToken extends AbstractAuthenticationToke
 		super(null);
 		this.credentials = token;
 		this.principal = null;
+		
+		super.setAuthenticated(true);
 	}
 
 	public Object getCredentials() {

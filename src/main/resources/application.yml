@@ -4,8 +4,6 @@ spring:
 ---  
 spring:
   profiles: default,development
-server:
-  port: 8081
   mail:
     host: smtp.gmail.com
     username: XXXXX
@@ -19,6 +17,17 @@ server:
           port: 465
           class: javax.net.ssl.SSLSocketFactory
           fallback: false
+server:
+  port: 8081
+  
+port_range:
+  start: 5000
+  end: 7500
+  
+security:
+  token: 
+    default: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    name: X-Auth-Token
 
 database:
   nosql:
@@ -27,9 +36,8 @@ database:
     password: haproxy
     port: 27017
     database: haproxy
-
 mqtt:
-  host: tcp://192.168.50.10:1883
+  host: tcp://172.16.248.154:1883
   client:
     id: haproxyhq/backend
   topic:

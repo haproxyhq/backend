@@ -10,13 +10,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import de.haproxyhq.mqtt.config.CustomMqttConfig;
+import de.haproxyhq.config.mqtt.CustomMqttConfig;
 
+/**
+ * 
+ * @author Jonas Depoix.
+ *
+ */
 @Controller
 public class MqttBrokerController {
 
 	@Autowired
-	CustomMqttConfig mqttConfig;
+	private CustomMqttConfig mqttConfig;
 
 	@RequestMapping(value = "/mqtt/broker", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, String>> getMqttBrokerInfo() {

@@ -31,10 +31,5 @@ public class AgentUpdateValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectBlank(errors, "configTimestamp", "field.required");
-		Agent newAgent = (Agent) target;
-		if(newAgent.getConfigTimestamp() < agentRepository.findOne(newAgent.getId()).getConfigTimestamp()) {
-			configPublisher.publishAgentConfig(newAgent.getId());
-			errors.rejectValue("configTimestamp", "config.timestamp.outdated");
-		}
 	}
 }

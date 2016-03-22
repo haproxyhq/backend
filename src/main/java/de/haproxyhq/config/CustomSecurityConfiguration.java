@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -34,6 +35,7 @@ import de.haproxyhq.config.security.handler.CustomAuthenticationSuccessHandler;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
  	@Bean

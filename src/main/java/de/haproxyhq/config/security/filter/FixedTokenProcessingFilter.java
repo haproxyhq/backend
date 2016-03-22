@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,9 @@ import org.springframework.web.filter.GenericFilterBean;
  *
  */
 public class FixedTokenProcessingFilter extends GenericFilterBean {
+	
+	@Value("${security.token.name}")
+	private String tokenName;
 
     private AuthenticationManager authManager;
 
@@ -36,8 +40,8 @@ public class FixedTokenProcessingFilter extends GenericFilterBean {
     	HttpServletRequest req = (HttpServletRequest) request;
     	
     	if (!req.getMethod().equals(HttpMethod.OPTIONS.toString())) {
-	        if(req.getHeader("token") != null) {
-	            String token = req.getHeader("token");
+	        if(req.getHeader(tokenName) != null) {
+	            String token = req.getHeader(tokenName);
 	
 	            if (token != null) {
 	

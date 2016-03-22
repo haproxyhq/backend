@@ -1,5 +1,6 @@
 package de.haproxyhq.mqtt.client;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
@@ -7,29 +8,25 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-import de.haproxyhq.mqtt.config.CustomMqttConfig;
+import de.haproxyhq.config.mqtt.CustomMqttConfig;
 
 /**
  * 
- * @author Maximilian Büttner
+ * @author Maximilian Büttner, Johannes Hiemer.
  *
  */
 @Component
 public class MqttPublisher {
 	
 	@Autowired
-	CustomMqttConfig mqttConfig;
+	private CustomMqttConfig mqttConfig;
 	
 	@Autowired
-	MessageHandler mqttOutbound;
+	private MessageHandler mqttOutbound;
 	
-	/**
-	 * sends the message pull config to the channel /haproxyhq/agents/{agentId}
-	 * @param agentId
-	 */
-	public void publishAgentConfig(String agentId) {
+	public void publishAgentConfig(ObjectId agentId) {
 		Message<String> message = MessageBuilder.withPayload("pull config")
-				.setHeader(MqttHeaders.TOPIC, mqttConfig.getMqttTopicPrefix() + agentId).build();
+				.setHeader(MqttHeaders.TOPIC, mqttConfig.getMqttTopicPrefix() + agentId.toString()).build();
 		mqttOutbound.handleMessage(message);
 	}
 }

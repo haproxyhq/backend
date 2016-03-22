@@ -3,13 +3,15 @@
  */
 package de.haproxyhq.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import de.haproxyhq.config.security.filter.TimestampHashAuthenticationToken;
 
 /**
  * @author Johannes Hiemer.
@@ -18,16 +20,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
+	@Value("${security.token.default}")
+	private String token;
+	
 	/* (non-Javadoc)
 	 * @see org.springframework.security.authentication.AuthenticationProvider#authenticate(org.springframework.security.core.Authentication)
 	 */
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
-		String token = "83u8989";
-		//Token token = tokenRepository.getByKey(authentication.getPrincipal().toString());
+		String providedToken = authentication.getCredentials().toString();
 		
-		if (token == null) {
+		if (providedToken == null) {
 			throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
 		}
 		
@@ -43,7 +47,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return clazz.equals(UsernamePasswordAuthenticationToken.class);
+		return clazz.equals(TimestampHashAuthenticationToken.class);
 	}
 
 }

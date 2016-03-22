@@ -1,5 +1,6 @@
 package de.haproxyhq.nosql.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -10,9 +11,9 @@ import org.springframework.data.annotation.Id;
 public class AbstractEntity {
 	
 	@Id
-	private String id;
+	private ObjectId id;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 

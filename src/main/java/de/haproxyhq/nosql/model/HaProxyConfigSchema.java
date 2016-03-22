@@ -4,13 +4,15 @@ package de.haproxyhq.nosql.model;
  * 
  * @author Jonas Depoix.
  */
-public class Schema extends AbstractEntity {
+public class HaProxyConfigSchema extends AbstractEntity {
 	
 	private String name;
+	
 	private String description;
+	
 	private String version;
 
-	private HaProxyConfig configHolder;
+	private HaProxyConfig haProxyConfig;
 
 	public String getName() {
 		return name;
@@ -28,12 +30,12 @@ public class Schema extends AbstractEntity {
 		this.description = description;
 	}
 
-	public HaProxyConfig getConfigHolder() {
-		return configHolder;
+	public HaProxyConfig getHaProxyConfig() {
+		return haProxyConfig;
 	}
 
-	public void setConfigHolder(HaProxyConfig configHolder) {
-		this.configHolder = configHolder;
+	public void setHaProxyConfig(HaProxyConfig haProxyConfig) {
+		this.haProxyConfig = haProxyConfig;
 	}
 
 	public String getVersion() {
