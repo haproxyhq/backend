@@ -1,24 +1,6 @@
 spring:
   application:
     name: haproxy-backend
----  
-spring:
-  profiles: default,development
-  mail:
-    host: smtp.gmail.com
-    username: XXXXX
-    password: XXXXX
-    properties:      
-      smtp:
-        auth: true
-        ssl: 
-          enable: true
-        socketFactory:
-          port: 465
-          class: javax.net.ssl.SSLSocketFactory
-          fallback: false
-server:
-  port: 8081
   
 port_range:
   start: 5000
@@ -28,7 +10,12 @@ security:
   token: 
     default: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     name: X-Auth-Token
-
+---  
+spring:
+  profiles: default,development
+server:
+  port: 8081
+  
 database:
   nosql:
     host: 172.16.248.144
@@ -36,12 +23,28 @@ database:
     password: haproxy
     port: 27017
     database: haproxy
+
 mqtt:
   host: tcp://172.16.248.154:1883
   client:
     id: haproxyhq/backend
   topic:
     prefix: /haproxyhq/agents/
+
+---
+spring:
+  profiles: cloud
+server:
+  port: 0
+
+mqtt:
+  host: tcp://172.24.100.35:1883
+  client:
+    id: haproxyhq/backend
+  topic:
+    prefix: /haproxyhq/agents/
+
+
     
 
   

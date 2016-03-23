@@ -1,0 +1,16 @@
+---
+instances: 1
+timeout: 180
+memory: 1024M
+domain: onevoila.rocks
+applications:
+- name: haproxy
+  host: haproxy
+  path: target/haproxy-backend.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  services:
+    - haproxy_mongodb2
+  env:
+    CF_TARGET: https://api.onevoila.rocks
+    SPRING_PROFILES_ACTIVE: cloud
+    JAVA_OPTS: -Djava.security.egd=file:/dev/urandom
