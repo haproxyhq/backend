@@ -41,41 +41,48 @@ public class HaProxySectionHandler {
 
 	private static final String SERVER = "server service_endpoint";
 
-	@Value("${port_range.start}")
+	@Value("${haproxy.port_range.start}")
 	private int portRangeStart;
 
-	@Value("${port_range.end}")
+	@Value("${haproxy.port_range.end}")
 	private int portRangeEnd;
+	
+	@Value("${haproxy.external_ip}")
+	private String haProxyExternalIp;
 
 	private List<Integer> availablePorts = new ArrayList<Integer>();
 
 	private List<Integer> usedPorts = new ArrayList<Integer>();
 
-	public void append(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
+	public ConnectionDetails append(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
 		List<Section> sections = haProxyConfig.getSections();
 
 		Section section = new Section();
 
 		Map<String, String> sectionProperties = new HashMap<String, String>();
 		sectionProperties.put("type", "listen");
-		sectionProperties.put(NAME_IDENTIFIER, connectionDetails.getIp());
+		sectionProperties.put(NAME_IDENTIFIER, connectionDetails.getIdentifier());
 		section.setSection(sectionProperties);
-
+		
+		Integer externalPort = this.resolveNextAvailablePort(haProxyConfig);
 		List<String> values = new ArrayList<String>();
 		values.add(BIND + BLANK + BIND_IP + COLON + this.resolveNextAvailablePort(haProxyConfig));
 		values.add(SERVER + BLANK + connectionDetails.getIp() + COLON + connectionDetails.getPort());
 		section.setValues(values);
 
 		sections.add(section);
+		
+		return new ConnectionDetails(haProxyExternalIp, externalPort);
 	}
 	
 	public boolean exists(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
-		for (Section section : haProxyConfig.getSections()) {
-			if (section.getSection().size() > 0 && section.getSection().get(NAME_IDENTIFIER) != null) {
-				if (section.getSection().get(NAME_IDENTIFIER).equals(connectionDetails.getIp())) 
-					return true;
+		if (haProxyConfig.getSections() != null)
+			for (Section section : haProxyConfig.getSections()) {
+				if (section.getSection().size() > 0 && section.getSection().get(NAME_IDENTIFIER) != null) {
+					if (section.getSection().get(NAME_IDENTIFIER).equals(connectionDetails.getIdentifier())) 
+						return true;
+				}
 			}
-		}
 		
 		return false;
 	}
@@ -83,7 +90,7 @@ public class HaProxySectionHandler {
 	public void remove(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
 		for (Section section : haProxyConfig.getSections()) {
 			if (section.getSection().size() > 0 && section.getSection().get(NAME_IDENTIFIER) != null) {
-				if (section.getSection().get(NAME_IDENTIFIER).equals(connectionDetails.getIp())) {
+				if (section.getSection().get(NAME_IDENTIFIER).equals(connectionDetails.getIdentifier())) {
 					haProxyConfig.getSections().remove(section);
 					break;
 				}

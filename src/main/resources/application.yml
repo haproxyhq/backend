@@ -1,10 +1,11 @@
 spring:
   application:
     name: haproxy-backend
-  
-port_range:
-  start: 5000
-  end: 7500
+
+haproxy:  
+  port_range:
+    start: 5000
+    end: 7500
   
 security:
   token: 
@@ -31,6 +32,9 @@ mqtt:
   topic:
     prefix: /haproxyhq/agents/
 
+haproxy:
+  external_ip: 88.198.249.61
+
 ---
 spring:
   profiles: cloud
@@ -44,6 +48,8 @@ mqtt:
   topic:
     prefix: /haproxyhq/agents/
 
+haproxy:
+  external_ip: 88.198.249.61
 
     
 

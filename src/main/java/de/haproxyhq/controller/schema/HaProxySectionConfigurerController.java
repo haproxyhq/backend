@@ -22,6 +22,7 @@ import de.haproxyhq.nosql.model.Agent;
 import de.haproxyhq.nosql.model.HaProxyConfig;
 import de.haproxyhq.nosql.repositories.AgentRepository;
 import de.haproxyhq.utils.HaProxySectionHandler;
+import de.haproxyhq.utils.ResponseMessage;
 
 /**
  * 
@@ -43,7 +44,7 @@ public class HaProxySectionConfigurerController {
 	@Autowired
 	private HaProxySectionHandler haPoxySectionHandler;
 
-	@RequestMapping(value = "/{agent}/schemas/append", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.PUT)
 	public ResponseEntity<Resource<Object>> appendListenerSection(@PathVariable("agent") String agent, 
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -54,26 +55,29 @@ public class HaProxySectionConfigurerController {
 				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 				
 				if (!haPoxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-					haPoxySectionHandler.append(haProxyConfig, connectionDetails);
+					ConnectionDetails haProxyConnectionDetails = haPoxySectionHandler.append(haProxyConfig, connectionDetails);
 					defaultAgent.setHaProxyConfig(haProxyConfig);
 					
 					defaultAgent.setConfigTimestamp(new Date().getTime());
 					agentRepository.save(defaultAgent);
 
 					mqttPublisher.publishAgentConfig(defaultAgent.getId());
+					
+					return new ResponseEntity<Resource<Object>>(new Resource<Object>(haProxyConnectionDetails),
+							HttpStatus.CREATED);
 				} else
-					return new ResponseEntity<Resource<Object>>(HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<Resource<Object>>(
+							new Resource<Object>(new ResponseMessage("Configuration Entry already exists in HAProxy config")), HttpStatus.BAD_REQUEST);
 				
 			} else
-				return new ResponseEntity<Resource<Object>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Resource<Object>>(
+						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")), HttpStatus.NOT_FOUND);
 		} else 
-			return new ResponseEntity<Resource<Object>>(HttpStatus.NOT_FOUND);	
-		
-		
-		return new ResponseEntity<Resource<Object>>(HttpStatus.CREATED);
+			return new ResponseEntity<Resource<Object>>(
+					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")), HttpStatus.NOT_FOUND);	
 	}
 	
-	@RequestMapping(value = "/{agent}/schemas/remove", method = RequestMethod.GET)
+	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.DELETE)
 	public ResponseEntity<Resource<Object>> removeListenerSection(@PathVariable("agent") String agent, 
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -83,20 +87,22 @@ public class HaProxySectionConfigurerController {
 			if (defaultAgent != null) {
 				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 				
-				if (!haPoxySectionHandler.exists(haProxyConfig, connectionDetails)) {
+				if (haPoxySectionHandler.exists(haProxyConfig, connectionDetails)) {
 					haPoxySectionHandler.remove(haProxyConfig, connectionDetails);	
 				
 					agentRepository.save(defaultAgent);
 				
 					mqttPublisher.publishAgentConfig(defaultAgent.getId());
+					
+					return new ResponseEntity<Resource<Object>>(HttpStatus.NO_CONTENT);
 				} else
-					return new ResponseEntity<Resource<Object>>(HttpStatus.NOT_FOUND);
+					return new ResponseEntity<Resource<Object>>(
+							new Resource<Object>(new ResponseMessage("Could not find entry in HA Proxy Config")), HttpStatus.NOT_FOUND);
 			} else
-				return new ResponseEntity<Resource<Object>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Resource<Object>>(
+						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")), HttpStatus.NOT_FOUND);
 		} else 
-			return new ResponseEntity<Resource<Object>>(HttpStatus.NOT_FOUND);	
-		
-		
-		return new ResponseEntity<Resource<Object>>(HttpStatus.CREATED);
+			return new ResponseEntity<Resource<Object>>(
+					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")), HttpStatus.NOT_FOUND);	
 	}
 }

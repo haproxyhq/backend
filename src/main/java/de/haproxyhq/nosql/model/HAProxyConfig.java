@@ -1,5 +1,6 @@
 package de.haproxyhq.nosql.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class HaProxyConfig extends AbstractEntity {
 	
-	List<Section> sections;
+	private List<Section> sections = new ArrayList<Section>();
 	
 	public HaProxyConfig() {
 		super();
