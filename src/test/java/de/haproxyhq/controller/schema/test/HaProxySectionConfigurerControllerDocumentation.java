@@ -48,7 +48,7 @@ public class HaProxySectionConfigurerControllerDocumentation extends MockMvcTest
 	@Test
 	public void addAndRemoveListener() throws Exception {
 		ConnectionDetails connectionDetails = createConnectionDetails(5002);
-		/**
+		
 		this.mockMvc.perform(put(REL + "/" + DEFAULT_AGENT_IDENTIFIER +  "/schemas?type=listen")
 				.accept(MediaTypes.HAL_JSON)
 				.header(tokenName, token)
@@ -56,7 +56,7 @@ public class HaProxySectionConfigurerControllerDocumentation extends MockMvcTest
 				.content(objectMapper.writeValueAsString(connectionDetails)))
 				.andExpect(status().isCreated())
 				.andDo(document("listen-schema-create"));
-		**/
+		
 		this.mockMvc.perform(delete(REL + "/" + DEFAULT_AGENT_IDENTIFIER +  "/schemas?type=listen")
 				.accept(MediaTypes.HAL_JSON)
 				.header(tokenName, token)

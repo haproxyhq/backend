@@ -26,14 +26,14 @@ database:
     database: haproxy
 
 mqtt:
-  host: tcp://172.16.248.154:1883
+  host: tcp://172.16.248.160:1883
   client:
     id: haproxyhq/backend
   topic:
     prefix: /haproxyhq/agents/
 
 haproxy:
-  external_ip: 88.198.249.61
+  external_ip: 172.16.248.160
 
 ---
 spring:
