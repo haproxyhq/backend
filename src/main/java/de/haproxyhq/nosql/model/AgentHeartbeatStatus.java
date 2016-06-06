@@ -8,11 +8,11 @@ public class AgentHeartbeatStatus {
 
 	private boolean agentAlive;
 
-	private boolean haproxyAlive;
+	private boolean haProxyAlive;
 	
-	public AgentHeartbeatStatus(boolean agentAlive, boolean haproxyAlive) {
+	public AgentHeartbeatStatus(boolean agentAlive, boolean haProxyAlive) {
 		this.agentAlive = agentAlive;
-		this.haproxyAlive = haproxyAlive;
+		this.haProxyAlive = haProxyAlive;
 	}
 	
 	public boolean isAgentAlive() {
@@ -23,11 +23,11 @@ public class AgentHeartbeatStatus {
 		this.agentAlive = agentAlive;
 	}
 	
-	public boolean isHaproxyAlive() {
-		return haproxyAlive;
+	public boolean isHAProxyAlive() {
+		return haProxyAlive;
 	}
 	
-	public void setHaproxyAlive(boolean haproxyAlive) {
-		this.haproxyAlive = haproxyAlive;
+	public void setHAProxyAlive(boolean haProxyAlive) {
+		this.haProxyAlive = haProxyAlive;
 	}
 }

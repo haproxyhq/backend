@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 
 import de.haproxyhq.nosql.model.Agent;
-import de.haproxyhq.nosql.model.HaProxyConfigSchema;
+import de.haproxyhq.nosql.model.HAProxyConfigSchema;
 import de.haproxyhq.web.validation.AgentUpdateValidator;
 
 /**
@@ -33,7 +33,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	private AgentUpdateValidator agentUpdateValidator;
 	
 	@SuppressWarnings("unused")
-	private static final Logger log = LoggerFactory.getLogger(CustomRepositoryRestMvcConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(CustomRepositoryRestMvcConfiguration.class);
 
 	@Bean(autowire = Autowire.BY_TYPE)
 	public ControllerLinkBuilderFactory controllerLinkBuilderFacotry() {
@@ -47,7 +47,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 	protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
 		config.setReturnBodyOnCreate(true);
 		config.setReturnBodyOnUpdate(true);
-		config.exposeIdsFor(Agent.class, HaProxyConfigSchema.class);
+		config.exposeIdsFor(Agent.class, HAProxyConfigSchema.class);
 		config.setMaxPageSize(100);
 		config.setDefaultPageSize(25);
 		config.setDefaultMediaType(MediaType.APPLICATION_JSON);

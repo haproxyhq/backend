@@ -21,7 +21,7 @@ import de.haproxyhq.mqtt.client.MqttPublisher;
 import de.haproxyhq.nosql.model.Agent;
 import de.haproxyhq.nosql.model.HaProxyConfig;
 import de.haproxyhq.nosql.repositories.AgentRepository;
-import de.haproxyhq.utils.HaProxySectionHandler;
+import de.haproxyhq.utils.HAProxySectionHandler;
 import de.haproxyhq.utils.ResponseMessage;
 
 /**
@@ -31,21 +31,21 @@ import de.haproxyhq.utils.ResponseMessage;
  */
 @Controller
 @RequestMapping(value = "/agents")
-public class HaProxySectionConfigurerController {
-	
+public class HAProxySectionConfigurerController {
+
 	private String DEFAULT_AGENT_IDENTIFIER = "Default-HaProxy-Agent";
-	
+
 	@Autowired
 	private MqttPublisher mqttPublisher;
-	
+
 	@Autowired
 	private AgentRepository agentRepository;
-	
+
 	@Autowired
-	private HaProxySectionHandler haPoxySectionHandler;
+	private HAProxySectionHandler haProxySectionHandler;
 
 	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.PUT)
-	public ResponseEntity<Resource<Object>> appendListenerSection(@PathVariable("agent") String agent, 
+	public ResponseEntity<Resource<Object>> appendListenerSection(@PathVariable("agent") String agent,
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -53,32 +53,37 @@ public class HaProxySectionConfigurerController {
 			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
 			if (defaultAgent != null) {
 				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
-				
-				if (!haPoxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-					ConnectionDetails haProxyConnectionDetails = haPoxySectionHandler.append(haProxyConfig, connectionDetails);
+
+				if (!haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
+					ConnectionDetails haProxyConnectionDetails = haProxySectionHandler.append(haProxyConfig,
+							connectionDetails);
 					defaultAgent.setHaProxyConfig(haProxyConfig);
-					
+
 					defaultAgent.setConfigTimestamp(new Date().getTime());
 					agentRepository.save(defaultAgent);
 
 					mqttPublisher.publishAgentConfig(defaultAgent.getId());
-					
+
 					return new ResponseEntity<Resource<Object>>(new Resource<Object>(haProxyConnectionDetails),
 							HttpStatus.CREATED);
 				} else
 					return new ResponseEntity<Resource<Object>>(
-							new Resource<Object>(new ResponseMessage("Configuration Entry already exists in HAProxy config")), HttpStatus.BAD_REQUEST);
-				
+							new Resource<Object>(
+									new ResponseMessage("Configuration Entry already exists in HAProxy config")),
+							HttpStatus.BAD_REQUEST);
+
 			} else
 				return new ResponseEntity<Resource<Object>>(
-						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")), HttpStatus.NOT_FOUND);
-		} else 
+						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")),
+						HttpStatus.NOT_FOUND);
+		} else
 			return new ResponseEntity<Resource<Object>>(
-					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")), HttpStatus.NOT_FOUND);	
+					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")),
+					HttpStatus.NOT_FOUND);
 	}
-	
+
 	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.DELETE)
-	public ResponseEntity<Resource<Object>> removeListenerSection(@PathVariable("agent") String agent, 
+	public ResponseEntity<Resource<Object>> removeListenerSection(@PathVariable("agent") String agent,
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -86,23 +91,28 @@ public class HaProxySectionConfigurerController {
 			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
 			if (defaultAgent != null) {
 				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
-				
-				if (haPoxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-					haPoxySectionHandler.remove(haProxyConfig, connectionDetails);	
-				
+
+				if (haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
+					haProxySectionHandler.remove(haProxyConfig, connectionDetails);
+					defaultAgent.setHaProxyConfig(haProxyConfig);
+
+					defaultAgent.setConfigTimestamp(new Date().getTime());
 					agentRepository.save(defaultAgent);
-				
+
 					mqttPublisher.publishAgentConfig(defaultAgent.getId());
-					
+
 					return new ResponseEntity<Resource<Object>>(HttpStatus.NO_CONTENT);
 				} else
 					return new ResponseEntity<Resource<Object>>(
-							new Resource<Object>(new ResponseMessage("Could not find entry in HA Proxy Config")), HttpStatus.NOT_FOUND);
+							new Resource<Object>(new ResponseMessage("Could not find entry in HA Proxy Config")),
+							HttpStatus.NOT_FOUND);
 			} else
 				return new ResponseEntity<Resource<Object>>(
-						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")), HttpStatus.NOT_FOUND);
-		} else 
+						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")),
+						HttpStatus.NOT_FOUND);
+		} else
 			return new ResponseEntity<Resource<Object>>(
-					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")), HttpStatus.NOT_FOUND);	
+					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")),
+					HttpStatus.NOT_FOUND);
 	}
 }

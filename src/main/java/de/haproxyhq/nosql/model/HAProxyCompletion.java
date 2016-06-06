@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * 
+ *
  * @author Maximilian Büttner.
  *
  */
 @Document
-public class HaProxyCompletion extends AbstractEntity {
-	
+public class HAProxyCompletion extends AbstractEntity {
+
 	private String url;
 
 	private String version;
@@ -60,11 +60,11 @@ public class HaProxyCompletion extends AbstractEntity {
 
 	}
 
-	public HaProxyCompletion() {
+	public HAProxyCompletion() {
 		super();
 	}
 
-	public HaProxyCompletion(String url, String version, List<Section> data) {
+	public HAProxyCompletion(String url, String version, List<Section> data) {
 		super();
 		this.url = url;
 		this.version = version;

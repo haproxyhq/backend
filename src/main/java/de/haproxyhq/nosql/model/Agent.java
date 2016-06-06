@@ -10,22 +10,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Agent extends AbstractEntity {
 
 	private String name;
-	
+
 	private String description;
-	
+
 	private String ip;
-	
+
 	private String version;
-	
+
 	private String authToken;
-	
+
 	private HaProxyConfig haProxyConfig;
-	
+
 	private long configTimestamp;
-	
+
 	private long agentHeartbeatTimestamp;
-	
-	private long haproxyHeartbeatTimestamp;
+
+	private long haProxyHeartbeatTimestamp;
 
 	public Agent() {
 		super();
@@ -41,7 +41,7 @@ public class Agent extends AbstractEntity {
 		long currentTimestamp = System.currentTimeMillis();
 
 		return new AgentHeartbeatStatus(Math.abs(this.getAgentHeartbeatTimestamp() - currentTimestamp) < 120000,
-				Math.abs(this.getHaproxyHeartbeatTimestamp() - currentTimestamp) < 120000);
+				Math.abs(this.getHaProxyHeartbeatTimestamp() - currentTimestamp) < 120000);
 	}
 
 	public String getName() {
@@ -92,12 +92,12 @@ public class Agent extends AbstractEntity {
 		this.configTimestamp = configTimestamp;
 	}
 
-	public long getHaproxyHeartbeatTimestamp() {
-		return haproxyHeartbeatTimestamp;
+	public long getHaProxyHeartbeatTimestamp() {
+		return haProxyHeartbeatTimestamp;
 	}
 
-	public void setHaproxyHeartbeatTimestamp(long haproxyHeartbeatTimestamp) {
-		this.haproxyHeartbeatTimestamp = haproxyHeartbeatTimestamp;
+	public void setHaProxyHeartbeatTimestamp(long haProxyHeartbeatTimestamp) {
+		this.haProxyHeartbeatTimestamp = haProxyHeartbeatTimestamp;
 	}
 
 	public long getAgentHeartbeatTimestamp() {
@@ -107,7 +107,7 @@ public class Agent extends AbstractEntity {
 	public void setAgentHeartbeatTimestamp(long agentHeartbeatTimestamp) {
 		this.agentHeartbeatTimestamp = agentHeartbeatTimestamp;
 	}
-	
+
 	public String getAuthToken() {
 		return authToken;
 	}

@@ -15,25 +15,25 @@ security:
 spring:
   profiles: default,development
 server:
-  port: 8081
+  port: 8080
   
 database:
   nosql:
-    host: 172.16.248.144
-    user: haproxy
-    password: haproxy
-    port: 27017
-    database: haproxy
+    host: 88.198.249.61
+    user: 27807a83-2017-41ea-a426-5673d62c4446
+    password: uie4o53595oal25llkvbjig019
+    port: 7777
+    database: 06ed3c55-a674-474a-94a7-86c84abcd3f2
 
 mqtt:
-  host: tcp://172.16.248.160:1883
+  host: tcp://88.198.249.61:1883
   client:
     id: haproxyhq/backend
   topic:
     prefix: /haproxyhq/agents/
 
 haproxy:
-  external_ip: 172.16.248.160
+  external_ip: 88.198.249.61
 
 ---
 spring:
