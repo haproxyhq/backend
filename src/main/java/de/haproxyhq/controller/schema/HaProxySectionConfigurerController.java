@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import de.haproxyhq.controller.schema.types.ConnectionDetails;
 import de.haproxyhq.mqtt.client.MqttPublisher;
 import de.haproxyhq.nosql.model.Agent;
-import de.haproxyhq.nosql.model.HaProxyConfig;
+import de.haproxyhq.nosql.model.HAProxyConfig;
 import de.haproxyhq.nosql.repositories.AgentRepository;
 import de.haproxyhq.utils.HAProxySectionHandler;
 import de.haproxyhq.utils.ResponseMessage;
@@ -52,7 +52,7 @@ public class HAProxySectionConfigurerController {
 		if (agent.equals(DEFAULT_AGENT_IDENTIFIER)) {
 			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
 			if (defaultAgent != null) {
-				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
+				HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
 				if (!haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
 					ConnectionDetails haProxyConnectionDetails = haProxySectionHandler.append(haProxyConfig,
@@ -90,7 +90,7 @@ public class HAProxySectionConfigurerController {
 		if (agent.equals(DEFAULT_AGENT_IDENTIFIER)) {
 			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
 			if (defaultAgent != null) {
-				HaProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
+				HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
 				if (haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
 					haProxySectionHandler.remove(haProxyConfig, connectionDetails);

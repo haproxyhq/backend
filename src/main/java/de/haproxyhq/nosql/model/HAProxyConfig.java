@@ -11,15 +11,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  */
 @Document
-public class HaProxyConfig extends AbstractEntity {
+public class HAProxyConfig extends AbstractEntity {
 
 	private List<Section> sections = new ArrayList<Section>();
 
-	public HaProxyConfig() {
+	public HAProxyConfig() {
 		super();
 	}
 
-	public HaProxyConfig(List<Section> sections) {
+	public HAProxyConfig(List<Section> sections) {
 		super();
 		this.sections = sections;
 	}

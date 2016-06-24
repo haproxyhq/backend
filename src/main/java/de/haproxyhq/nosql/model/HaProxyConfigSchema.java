@@ -12,7 +12,7 @@ public class HAProxyConfigSchema extends AbstractEntity {
 
 	private String version;
 
-	private HaProxyConfig haProxyConfig;
+	private HAProxyConfig haProxyConfig;
 
 	public String getName() {
 		return name;
@@ -30,11 +30,11 @@ public class HAProxyConfigSchema extends AbstractEntity {
 		this.description = description;
 	}
 
-	public HaProxyConfig getHAProxyConfig() {
+	public HAProxyConfig getHAProxyConfig() {
 		return haProxyConfig;
 	}
 
-	public void setHAProxyConfig(HaProxyConfig haProxyConfig) {
+	public void setHAProxyConfig(HAProxyConfig haProxyConfig) {
 		this.haProxyConfig = haProxyConfig;
 	}
 

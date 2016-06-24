@@ -19,7 +19,7 @@ public class Agent extends AbstractEntity {
 
 	private String authToken;
 
-	private HaProxyConfig haProxyConfig;
+	private HAProxyConfig haProxyConfig;
 
 	private long configTimestamp;
 
@@ -31,7 +31,7 @@ public class Agent extends AbstractEntity {
 		super();
 	}
 
-	public Agent(String name, HaProxyConfig haProxyConfig) {
+	public Agent(String name, HAProxyConfig haProxyConfig) {
 		super();
 		this.name = name;
 		this.haProxyConfig = haProxyConfig;
@@ -52,11 +52,11 @@ public class Agent extends AbstractEntity {
 		this.name = name;
 	}
 
-	public HaProxyConfig getHaProxyConfig() {
+	public HAProxyConfig getHaProxyConfig() {
 		return haProxyConfig;
 	}
 
-	public void setHaProxyConfig(HaProxyConfig haProxyConfig) {
+	public void setHaProxyConfig(HAProxyConfig haProxyConfig) {
 		this.haProxyConfig = haProxyConfig;
 	}
 

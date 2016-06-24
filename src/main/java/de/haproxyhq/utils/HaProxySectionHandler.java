@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.haproxyhq.controller.schema.types.ConnectionDetails;
-import de.haproxyhq.nosql.model.HaProxyConfig;
+import de.haproxyhq.nosql.model.HAProxyConfig;
 import de.haproxyhq.nosql.model.Section;
 
 /**
@@ -53,7 +53,7 @@ public class HAProxySectionHandler {
 
 	private List<Integer> usedPorts = new ArrayList<Integer>();
 
-	public ConnectionDetails append(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
+	public ConnectionDetails append(HAProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
 		List<Section> sections = haProxyConfig.getSections();
 
 		Section section = new Section();
@@ -74,7 +74,7 @@ public class HAProxySectionHandler {
 		return new ConnectionDetails(haProxyExternalIp, externalPort);
 	}
 
-	public boolean exists(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
+	public boolean exists(HAProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
 		if (haProxyConfig.getSections() != null)
 			for (Section section : haProxyConfig.getSections()) {
 				if (section.getSection().size() > 0 && section.getSection().get(NAME_IDENTIFIER) != null) {
@@ -86,7 +86,7 @@ public class HAProxySectionHandler {
 		return false;
 	}
 
-	public void remove(HaProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
+	public void remove(HAProxyConfig haProxyConfig, ConnectionDetails connectionDetails) {
 		for (Section section : haProxyConfig.getSections()) {
 			if (section.getSection().size() > 0 && section.getSection().get(NAME_IDENTIFIER) != null) {
 				if (section.getSection().get(NAME_IDENTIFIER).equals(connectionDetails.getIdentifier())) {
@@ -97,7 +97,7 @@ public class HAProxySectionHandler {
 		}
 	}
 
-	private void listUsedPort(HaProxyConfig haProxyConfig) {
+	private void listUsedPort(HAProxyConfig haProxyConfig) {
 		for (Section section : haProxyConfig.getSections())
 			if (section.getSection().get("type").equals(LISTEN_TYPE))
 				for (String value : section.getValues())
@@ -121,7 +121,7 @@ public class HAProxySectionHandler {
 		availablePorts.removeAll(usedPorts);
 	}
 
-	private Integer resolveNextAvailablePort(HaProxyConfig haProxyConfig) {
+	private Integer resolveNextAvailablePort(HAProxyConfig haProxyConfig) {
 		this.initAvailablePorts();
 
 		this.listUsedPort(haProxyConfig);
