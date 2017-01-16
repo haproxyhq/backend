@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import de.haproxyhq.config.mqtt.CustomMqttConfig;
+import de.haproxyhq.config.amqp.CustomAmqpConfig;
 
 /**
  * 
@@ -18,17 +18,17 @@ import de.haproxyhq.config.mqtt.CustomMqttConfig;
  *
  */
 @Controller
-public class MqttBrokerController {
+public class AmqpBrokerController {
 
 	@Autowired
-	private CustomMqttConfig mqttConfig;
+	private CustomAmqpConfig mqttConfig;
 
-	@RequestMapping(value = "/mqtt/broker", method = RequestMethod.GET)
+	@RequestMapping(value = "/amqp/broker", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, String>> getMqttBrokerInfo() {
 		Map<String, String> mqttBroker = new HashMap<>();
-		mqttBroker.put("host", mqttConfig.getMqttHost());
-		mqttBroker.put("clientId", mqttConfig.getMqttClientId());
-		mqttBroker.put("topicPrefix", mqttConfig.getMqttTopicPrefix());
+		mqttBroker.put("host", mqttConfig.getHost());
+		// mqttBroker.put("clientId", mqttConfig.getClientId());
+		mqttBroker.put("exchangePrefix", mqttConfig.getExchangePrefix());
 
 		return new ResponseEntity<Map<String, String>>(mqttBroker, HttpStatus.OK);
 	}

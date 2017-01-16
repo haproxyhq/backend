@@ -37,9 +37,13 @@ haproxy:
 
 ---
 spring:
-  profiles: cloud
-server:
-  port: 0
+  profiles: lab
+
+
+spring:
+  rabbitmq:
+    host: 
+    port:
 
 mqtt:
   host: tcp://172.24.100.35:1883
@@ -51,6 +55,11 @@ mqtt:
 haproxy:
   external_ip: 88.198.249.61
 
-    
+---
+spring: 
+  profiles: cloud
+
+server:
+  port: 0
 
   
