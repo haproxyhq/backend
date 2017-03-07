@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,41 +55,49 @@ public class HAProxySectionConfigurerController {
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		if (agent.equals(DEFAULT_AGENT_IDENTIFIER)) {
-			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
-			if (defaultAgent != null) {
-				HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
+		if (agent == null) {
+			return new ResponseEntity<Resource<Object>>(
+					new Resource<Object>(new ResponseMessage("No agent name provided.")), HttpStatus.NOT_FOUND);
+		}
 
-				if (!haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-					ConnectionDetails haProxyConnectionDetails = haProxySectionHandler.append(haProxyConfig,
-							connectionDetails);
-					defaultAgent.setHaProxyConfig(haProxyConfig);
+		ObjectId agentId;
+		try {
+			agentId = new ObjectId(agent);
+		} catch (IllegalArgumentException ex) {
+			return new ResponseEntity<Resource<Object>>(
+					new Resource<Object>(new ResponseMessage("Agent name is not of type id.")), HttpStatus.NOT_FOUND);
+		}
+		Agent defaultAgent = agentRepository.findOne(agentId);
+		if (defaultAgent != null) {
+			HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
-					defaultAgent.setConfigTimestamp(new Date().getTime());
-					agentRepository.save(defaultAgent);
+			if (!haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
+				ConnectionDetails haProxyConnectionDetails = haProxySectionHandler.append(haProxyConfig,
+						connectionDetails);
+				defaultAgent.setHaProxyConfig(haProxyConfig);
 
-					try {
-						mqttPublisher.publishAgentConfig(defaultAgent.getId());
-					} catch (IllegalStateException | TimeoutException e) {
-						log.error(e.getMessage(), e);
-					}
+				defaultAgent.setConfigTimestamp(new Date().getTime());
+				agentRepository.save(defaultAgent);
 
-					return new ResponseEntity<Resource<Object>>(new Resource<Object>(haProxyConnectionDetails),
-							HttpStatus.CREATED);
-				} else
-					return new ResponseEntity<Resource<Object>>(
-							new Resource<Object>(
-									new ResponseMessage("Configuration Entry already exists in HAProxy config")),
-							HttpStatus.BAD_REQUEST);
+				try {
+					mqttPublisher.publishAgentConfig(defaultAgent.getId());
+				} catch (IllegalStateException | TimeoutException e) {
+					log.error(e.getMessage(), e);
+				}
 
+				return new ResponseEntity<Resource<Object>>(new Resource<Object>(haProxyConnectionDetails),
+						HttpStatus.CREATED);
 			} else
 				return new ResponseEntity<Resource<Object>>(
-						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")),
-						HttpStatus.NOT_FOUND);
+						new Resource<Object>(
+								new ResponseMessage("Configuration Entry already exists in HAProxy config")),
+						HttpStatus.BAD_REQUEST);
+
 		} else
 			return new ResponseEntity<Resource<Object>>(
-					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")),
+					new Resource<Object>(new ResponseMessage("Could not find agent for name: " + agent)),
 					HttpStatus.NOT_FOUND);
+
 	}
 
 	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.DELETE)
