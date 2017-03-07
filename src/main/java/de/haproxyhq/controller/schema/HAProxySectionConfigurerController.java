@@ -39,8 +39,6 @@ public class HAProxySectionConfigurerController {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	private String DEFAULT_AGENT_IDENTIFIER = "Default-HaProxy-Agent";
-
 	@Autowired
 	private AmqpPublisher mqttPublisher;
 
@@ -105,8 +103,9 @@ public class HAProxySectionConfigurerController {
 			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		if (agent.equals(DEFAULT_AGENT_IDENTIFIER)) {
-			Agent defaultAgent = agentRepository.findByName(DEFAULT_AGENT_IDENTIFIER);
+			ObjectId agentId = new ObjectId(agent);
+		
+			Agent defaultAgent = agentRepository.findOne(agentId);
 			if (defaultAgent != null) {
 				HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
@@ -132,9 +131,5 @@ public class HAProxySectionConfigurerController {
 				return new ResponseEntity<Resource<Object>>(
 						new Resource<Object>(new ResponseMessage("Could not Agent for Identifier")),
 						HttpStatus.NOT_FOUND);
-		} else
-			return new ResponseEntity<Resource<Object>>(
-					new Resource<Object>(new ResponseMessage("Agent not defined with default Identifer")),
-					HttpStatus.NOT_FOUND);
 	}
 }
