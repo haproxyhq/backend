@@ -4,8 +4,9 @@
 package de.haproxyhq.controller.schema.types;
 
 /**
- * @author Johannes Hiemer.
+ *@author Johannes Hiemer.
  *
+ *This class represents the connection details to connect from an external network to a service
  */
 public class ConnectionDetails {
 

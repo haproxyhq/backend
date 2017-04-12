@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.haproxyhq.controller.schema.types.ConnectionDetails;
+import de.haproxyhq.controller.schema.types.InternalConnectionDetails;
 import de.haproxyhq.mqtt.client.AmqpPublisher;
 import de.haproxyhq.nosql.model.Agent;
 import de.haproxyhq.nosql.model.HAProxyConfig;
@@ -50,7 +51,7 @@ public class HAProxySectionConfigurerController {
 
 	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.PUT)
 	public ResponseEntity<Resource<Object>> appendListenerSection(@PathVariable("agent") String agent,
-			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
+			@RequestParam("type") String type, @RequestBody InternalConnectionDetails internalConnectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		if (agent == null) {
@@ -69,9 +70,9 @@ public class HAProxySectionConfigurerController {
 		if (defaultAgent != null) {
 			HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
-			if (!haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-				ConnectionDetails haProxyConnectionDetails = haProxySectionHandler.append(haProxyConfig,
-						connectionDetails);
+			if (!haProxySectionHandler.exists(haProxyConfig, internalConnectionDetails)) {
+				ConnectionDetails externalConnectionDetails = haProxySectionHandler.append(haProxyConfig,
+						internalConnectionDetails);
 				defaultAgent.setHaProxyConfig(haProxyConfig);
 
 				defaultAgent.setConfigTimestamp(new Date().getTime());
@@ -83,7 +84,7 @@ public class HAProxySectionConfigurerController {
 					log.error(e.getMessage(), e);
 				}
 
-				return new ResponseEntity<Resource<Object>>(new Resource<Object>(haProxyConnectionDetails),
+				return new ResponseEntity<Resource<Object>>(new Resource<Object>(externalConnectionDetails),
 						HttpStatus.CREATED);
 			} else
 				return new ResponseEntity<Resource<Object>>(
@@ -100,7 +101,7 @@ public class HAProxySectionConfigurerController {
 
 	@RequestMapping(value = "/{agent}/schemas", method = RequestMethod.DELETE)
 	public ResponseEntity<Resource<Object>> removeListenerSection(@PathVariable("agent") String agent,
-			@RequestParam("type") String type, @RequestBody ConnectionDetails connectionDetails,
+			@RequestParam("type") String type, @RequestBody InternalConnectionDetails internalConnectionDetails,
 			HttpServletRequest request, HttpServletResponse response) {
 
 			ObjectId agentId = new ObjectId(agent);
@@ -109,8 +110,8 @@ public class HAProxySectionConfigurerController {
 			if (defaultAgent != null) {
 				HAProxyConfig haProxyConfig = defaultAgent.getHaProxyConfig();
 
-				if (haProxySectionHandler.exists(haProxyConfig, connectionDetails)) {
-					haProxySectionHandler.remove(haProxyConfig, connectionDetails);
+				if (haProxySectionHandler.exists(haProxyConfig, internalConnectionDetails)) {
+					haProxySectionHandler.remove(haProxyConfig, internalConnectionDetails);
 					defaultAgent.setHaProxyConfig(haProxyConfig);
 
 					defaultAgent.setConfigTimestamp(new Date().getTime());
