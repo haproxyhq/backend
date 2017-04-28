@@ -7,13 +7,15 @@ import java.util.List;
 /**
  * @author Rene Schollmeyer, Sebastian Boeing, evoila.
  *
- *This cLass represents the necessary parameters for HAProxy to make a service available  
+ *This class represents the necessary parameters for HAProxy to make a service available  
  */
 public class InternalConnectionDetails {
 
 	private String ip;
 	
 	private int port;
+	
+	private String name;
 	
 	private String mode;
 	
@@ -22,10 +24,11 @@ public class InternalConnectionDetails {
 	public InternalConnectionDetails() {
 	}
 
-	public InternalConnectionDetails(String ip, int port, String mode, List<String> options) {
+	public InternalConnectionDetails(String ip, int port, String name, String mode, List<String> options) {
 		super();
 		this.ip = ip;
 		this.port = port;
+		this.name = name;
 		this.mode = mode;
 		setOptions(options);
 	}
@@ -46,6 +49,14 @@ public class InternalConnectionDetails {
 		this.port = port;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getMode() {
 		return mode;
 	}
@@ -66,7 +77,7 @@ public class InternalConnectionDetails {
 	}
 	
 	public String getIdentifier() {
-		return this.ip.concat("-").concat(Integer.toString(this.port));
+		return this.ip.concat("-").concat(Integer.toString(this.port)).concat("-").concat(name);
 	}
 	
 }
