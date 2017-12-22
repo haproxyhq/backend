@@ -1,51 +1,47 @@
 package de.haproxyhq.nosql.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.springframework.data.annotation.Transient;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import de.haproxyhq.nosql.model.AgentHeartbeatStatus;
-import de.haproxyhq.utils.AgentUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 
- * @author Maximilian Büttner, jdepoix
+ * @author Maximilian Büttner, Jonas Depoix, Johannes Hiemer.
  */
-public class Agent extends AbstractEntity implements UserDetails {
-
-	private static final long serialVersionUID = 7562366999557112617L;
+@Document
+public class Agent extends AbstractEntity {
 
 	private String name;
+
 	private String description;
+
 	private String ip;
+
 	private String version;
+
 	private String authToken;
-	private HAProxyConfig configHolder;
+
+	private HAProxyConfig haProxyConfig;
+
 	private long configTimestamp;
+
 	private long agentHeartbeatTimestamp;
-	private long haproxyHeartbeatTimestamp;
+
+	private long haProxyHeartbeatTimestamp;
 
 	public Agent() {
 		super();
 	}
 
-	public Agent(String name, HAProxyConfig configHolder) {
+	public Agent(String name, HAProxyConfig haProxyConfig) {
 		super();
 		this.name = name;
-		this.configHolder = configHolder;
+		this.haProxyConfig = haProxyConfig;
 	}
 
 	public AgentHeartbeatStatus getAgentHeartbeat() {
 		long currentTimestamp = System.currentTimeMillis();
 
 		return new AgentHeartbeatStatus(Math.abs(this.getAgentHeartbeatTimestamp() - currentTimestamp) < 120000,
-				Math.abs(this.getHaproxyHeartbeatTimestamp() - currentTimestamp) < 120000);
+				Math.abs(this.getHaProxyHeartbeatTimestamp() - currentTimestamp) < 120000);
 	}
 
 	public String getName() {
@@ -56,12 +52,12 @@ public class Agent extends AbstractEntity implements UserDetails {
 		this.name = name;
 	}
 
-	public HAProxyConfig getConfigHolder() {
-		return configHolder;
+	public HAProxyConfig getHaProxyConfig() {
+		return haProxyConfig;
 	}
 
-	public void setConfigHolder(HAProxyConfig configHolder) {
-		this.configHolder = configHolder;
+	public void setHaProxyConfig(HAProxyConfig haProxyConfig) {
+		this.haProxyConfig = haProxyConfig;
 	}
 
 	public String getDescription() {
@@ -96,12 +92,12 @@ public class Agent extends AbstractEntity implements UserDetails {
 		this.configTimestamp = configTimestamp;
 	}
 
-	public long getHaproxyHeartbeatTimestamp() {
-		return haproxyHeartbeatTimestamp;
+	public long getHaProxyHeartbeatTimestamp() {
+		return haProxyHeartbeatTimestamp;
 	}
 
-	public void setHaproxyHeartbeatTimestamp(long haproxyHeartbeatTimestamp) {
-		this.haproxyHeartbeatTimestamp = haproxyHeartbeatTimestamp;
+	public void setHaProxyHeartbeatTimestamp(long haProxyHeartbeatTimestamp) {
+		this.haProxyHeartbeatTimestamp = haProxyHeartbeatTimestamp;
 	}
 
 	public long getAgentHeartbeatTimestamp() {
@@ -111,72 +107,13 @@ public class Agent extends AbstractEntity implements UserDetails {
 	public void setAgentHeartbeatTimestamp(long agentHeartbeatTimestamp) {
 		this.agentHeartbeatTimestamp = agentHeartbeatTimestamp;
 	}
-	
+
 	public String getAuthToken() {
 		return authToken;
 	}
 
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new GrantedAuthority() {
-
-			private static final long serialVersionUID = -5440166193605354062L;
-
-			@Override
-			public String getAuthority() {
-				return AgentUtils.agentGroup;
-			}
-		});
-		return authorities;
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public String getPassword() {
-		return "";
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public String getUsername() {
-		return AgentUtils.agentPrefix + getId();
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Transient
-	@JsonIgnore
-	@Override
-	public boolean isEnabled() {
-		return true;
 	}
 
 }

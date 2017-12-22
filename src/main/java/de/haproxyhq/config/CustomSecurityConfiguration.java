@@ -8,11 +8,8 @@ import java.util.List;
 
 import javax.servlet.Filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,43 +21,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
-import de.haproxyhq.security.CustomAgentDetailsService;
-import de.haproxyhq.security.CustomUserDetailsService;
-import de.haproxyhq.security.authentication.CustomAuthenticationProvider;
-import de.haproxyhq.security.authentication.CustomUsernamePasswordAuthenticationFilter;
-import de.haproxyhq.security.filter.TokenAuthenticationFilter;
-import de.haproxyhq.security.handler.CustomAccessDeniedHandler;
-import de.haproxyhq.security.handler.CustomAuthenticationEntryPoint;
-import de.haproxyhq.security.handler.CustomAuthenticationFailureHandler;
-import de.haproxyhq.security.handler.CustomAuthenticationSuccessHandler;
-import de.haproxyhq.security.token.TokenUtil;
+import de.haproxyhq.config.security.CustomAuthenticationProvider;
+import de.haproxyhq.config.security.filter.FixedTokenProcessingFilter;
+import de.haproxyhq.config.security.handler.CustomAccessDeniedHandler;
+import de.haproxyhq.config.security.handler.CustomAuthenticationEntryPoint;
+import de.haproxyhq.config.security.handler.CustomAuthenticationFailureHandler;
+import de.haproxyhq.config.security.handler.CustomAuthenticationSuccessHandler;
 
 /**
  * 
- * @author Johannes Hiemer, Maximilian Büttner
+ * @author Johannes Hiemer.
  *
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
-	@Bean
-	public static PropertyPlaceholderConfigurer securityPropertyPlaceholderConfigurer() {
-		PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-		propertyPlaceholderConfigurer.setLocation(new ClassPathResource("application-security.properties"));
-		propertyPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
-		return propertyPlaceholderConfigurer;
-	}
-	
-	@Autowired
-    private TokenUtil tokenUtil;
-	
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
-	
-	@Autowired
-	private CustomAgentDetailsService customAgentDetailsService;
 	
  	@Bean
     @Override
@@ -75,8 +51,7 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.addFilterBefore(authenticationFilter(), LogoutFilter.class)
-			.addFilter(loginFilter())
+		http.addFilterBefore(fixedTokenProcessingFilter(), LogoutFilter.class)
 		.csrf().disable()
 
 		.sessionManagement()
@@ -91,44 +66,14 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.and()
 
 		.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/j_spring_security_check").permitAll()
-			.antMatchers(HttpMethod.POST, "/users").permitAll()
-			.antMatchers(HttpMethod.PUT, "/users/reset-password").permitAll()
-			.antMatchers(HttpMethod.PUT, "/users/*/password").permitAll()
-			.antMatchers(HttpMethod.PUT, "/users/*/email").permitAll()
-			.antMatchers(HttpMethod.GET, "/static/**").permitAll()
-		
-			.antMatchers(HttpMethod.GET, "/").permitAll()
 			.antMatchers(HttpMethod.GET, "/**").authenticated()
 			.antMatchers(HttpMethod.POST, "/**").authenticated()
-			.antMatchers(HttpMethod.PUT, "/**").authenticated()
-			.antMatchers(HttpMethod.PATCH, "/**").authenticated()
-			.antMatchers(HttpMethod.DELETE, "/**").authenticated()
-			.antMatchers(HttpMethod.GET, "/users/isAuthenticated").authenticated();
-	}
-	
-	private Filter authenticationFilter() {
-        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
-        tokenAuthenticationFilter.setUserDetailsService(customUserDetailsService);
-        tokenAuthenticationFilter.setAgentDetailsService(customAgentDetailsService);
-        tokenAuthenticationFilter.setTokenUtil(tokenUtil);
-        return tokenAuthenticationFilter;
-    }
-	
-	@Bean
-	public Filter loginFilter() throws Exception {
-		CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter 
-			= new CustomUsernamePasswordAuthenticationFilter();
-		customUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
-		customUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler());
-		customUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler());
-		
-		return customUsernamePasswordAuthenticationFilter;		
+			.antMatchers(HttpMethod.DELETE, "/**").authenticated();
 	}
 	
 	@Bean 
 	public CustomAuthenticationProvider customAuthenticationProvider() {
-		return new CustomAuthenticationProvider();
+		return new de.haproxyhq.config.security.CustomAuthenticationProvider();
 	}
 	
 	@Bean
@@ -145,4 +90,10 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public CustomAuthenticationFailureHandler customAuthenticationFailureHandler() {
 		return new CustomAuthenticationFailureHandler();
 	}
+	
+	@Bean
+	public Filter fixedTokenProcessingFilter() throws Exception {
+		return new FixedTokenProcessingFilter(authenticationManagerBean());
+	}
+	
 }

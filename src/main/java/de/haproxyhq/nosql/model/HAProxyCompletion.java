@@ -2,12 +2,16 @@ package de.haproxyhq.nosql.model;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
- * 
- * @author Maximilian Büttner
+ *
+ * @author Maximilian Büttner.
  *
  */
+@Document
 public class HAProxyCompletion extends AbstractEntity {
+
 	private String url;
 
 	private String version;
